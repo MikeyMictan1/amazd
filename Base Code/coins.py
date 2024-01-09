@@ -1,6 +1,6 @@
 import pygame
 
-
+# COINS
 
 class Coins(pygame.sprite.Sprite):
     def __init__(self, pos, groups):
