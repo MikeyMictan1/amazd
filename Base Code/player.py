@@ -443,6 +443,9 @@ class Player(pygame.sprite.Sprite):
         self.points_out()
         self.character_hurt()
         self.heads_up_display()
+        print("-----------")
+        print(round(self.attacking_frame, 1))
+        print(self.attacking)
 
 
 

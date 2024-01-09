@@ -132,8 +132,24 @@ class YSortCameraGroup(pygame.sprite.Group):
 
     def custom_draw(self, player):
         # getting the offset
-        self.offset.x = player.rect.centerx - self.half_width
         self.offset.y = player.rect.centery - self.half_height
+
+        # For animated character attack left -> change offset when the character attacks, so that the character is drawn in the correct location, change character location AND offset
+        if player.left and player.attacking and player.attacking_frame == 0.1:
+            print("----------------------------------")
+            player.rect.centerx -= 50
+
+        if player.left and player.attacking and round(player.attacking_frame, 1) == 3.0:
+            print("------------------------------------------------------")
+            player.rect.centerx += 50
+
+        if player.left and player.attacking:
+            ...
+
+        else:
+            self.offset.x = player.rect.centerx - self.half_width
+
+            print("attack left!!!")
 
 
         for sprite in self.sprites():
