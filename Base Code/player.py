@@ -12,8 +12,8 @@ class Player(pygame.sprite.Sprite):
         self.player_width = 50
         self.player_height = 64
         self.image = pygame.image.load(
-            f"../Graphics/character/link.png").convert_alpha()  # making a standard square surface
-        self.image = pygame.transform.scale(self.image, (self.player_width, self.player_height))
+            f"../Graphics/character/TESTS/NEW_idle_right/idleright1.png").convert_alpha()  # making a standard square surface
+        self.image = pygame.transform.scale(self.image, (50, 64))
 
         self.rect = self.image.get_rect(topleft=pos)
 
@@ -36,7 +36,7 @@ class Player(pygame.sprite.Sprite):
 
         # attacks
         self.attacking = False
-        self.attack_cooldown = 400
+        self.attack_cooldown = 300
         self.attack_time = None
         self.create_attack = create_attack
         self.destroy_attack = destroy_attack
@@ -79,7 +79,7 @@ class Player(pygame.sprite.Sprite):
         self.invulnerability_duration = 1000
 
         # animation attack files
-        self.attack_right = ('../Graphics/character/attack_right/')
+        self.attack_right = ('../Graphics/character/TESTS/NEW_attack_right/')
         self.attack_right_lst = self.animation_files(self.attack_right)
 
         self.attack_left = ('../Graphics/character/attack_left/')
@@ -178,9 +178,13 @@ class Player(pygame.sprite.Sprite):
         current_time = pygame.time.get_ticks()
 
         if self.attacking:
-            if current_time - self.attack_time >= self.attack_cooldown + weapon_data[self.weapon]["cooldown"]:
+            #if current_time - self.attack_time >= 378 + weapon_data[self.weapon]["cooldown"]:
+            #    self.destroy_attack()
+            #    self.attacking = False
+            if round(self.attacking_frame, 1) == 3.9:
                 self.destroy_attack()
                 self.attacking = False
+
 
         if not self.can_damage:
             if current_time - self.hurt_time >= self.invulnerability_duration:
@@ -268,13 +272,13 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         # all animation files
         # idle
-        idle_right_path = ('../Graphics/character/idle_right/')
+        idle_right_path = ('../Graphics/character/TESTS/NEW_idle_right/')
         idle_right_lst = self.animation_files(idle_right_path)
 
-        idle_down_path = ('../Graphics/character/idle_down/')
+        idle_down_path = ('../Graphics/character/TESTS/NEW_idle_down/')
         idle_down_lst = self.animation_files(idle_down_path)
 
-        idle_up_path = ('../Graphics/character/idle_up/')
+        idle_up_path = ('../Graphics/character/TESTS/NEW_idle_up/')
         idle_up_lst = self.animation_files(idle_up_path)
 
         # moving
@@ -312,17 +316,19 @@ class Player(pygame.sprite.Sprite):
 
 
         # making the player face different ways
-
+        new_width = 200
+        new_height = 150
         # attacking (29 PIXELS FOR ATTACK ANIMATION, (50,64) IS STANDARD PLAYER TRANSFORM)
         if self.right and self.attacking == True:
             self.player_direction = "right"
             self.image = pygame.image.load(f"{self.attack_right}{self.attack_right_lst[int(self.attacking_frame)]}").convert_alpha()
-            self.image = pygame.transform.scale(self.image, (100, self.player_height))
+            self.image = pygame.transform.scale(self.image, (new_width, new_height))
 
         elif self.left and self.attacking == True:
             self.player_direction = "left"
-            self.image = pygame.image.load(f"{self.attack_left}{self.attack_left_lst[int(self.attacking_frame)]}").convert_alpha()
-            self.image = pygame.transform.scale(self.image, (100, self.player_height))
+            self.image = pygame.image.load(f"{self.attack_right}{self.attack_right_lst[int(self.attacking_frame)]}").convert_alpha()
+            self.image = pygame.transform.flip(self.image, True, False)
+            self.image = pygame.transform.scale(self.image, (new_width, new_height))
 
         elif self.down and self.attacking == True:
             self.player_direction = "down"
@@ -346,6 +352,7 @@ class Player(pygame.sprite.Sprite):
 
         elif self.left and keys[pygame.K_a]:
             self.player_direction = "left"
+            print("FRAME: {self.frame}")
             self.image = pygame.image.load(f"{moving_right_path}{moving_right_lst[int(self.frame)]}").convert_alpha()
             self.image = pygame.transform.flip(self.image, True, False)
             self.image = pygame.transform.scale(self.image, (self.player_width, self.player_height))
@@ -360,23 +367,23 @@ class Player(pygame.sprite.Sprite):
         elif self.down:
             self.player_direction = "down"
             self.image = pygame.image.load(f"{idle_down_path}{idle_down_lst[int(self.frame)]}").convert_alpha()
-            self.image = pygame.transform.scale(self.image, (self.player_width, self.player_height))
+            self.image = pygame.transform.scale(self.image, (new_width, new_height))
 
         elif self.right:
             self.player_direction = "right"
             self.image = pygame.image.load(f"{idle_right_path}{idle_right_lst[int(self.frame)]}").convert_alpha()
-            self.image = pygame.transform.scale(self.image, (self.player_width, self.player_height))
+            self.image = pygame.transform.scale(self.image, (new_width, new_height))
 
         elif self.left:
             self.player_direction = "left"
             self.image = pygame.image.load(f"{idle_right_path}{idle_right_lst[int(self.frame)]}").convert_alpha()
             self.image = pygame.transform.flip(self.image, True, False)
-            self.image = pygame.transform.scale(self.image, (self.player_width, self.player_height))
+            self.image = pygame.transform.scale(self.image, (new_width, new_height))
 
         elif self.up:
             self.player_direction = "up"
             self.image = pygame.image.load(f"{idle_up_path}{idle_up_lst[int(self.frame)]}").convert_alpha()
-            self.image = pygame.transform.scale(self.image, (self.player_width, self.player_height))
+            self.image = pygame.transform.scale(self.image, (new_width, new_height))
 
         # ---------
 
@@ -444,8 +451,9 @@ class Player(pygame.sprite.Sprite):
         self.character_hurt()
         self.heads_up_display()
         print("-----------")
-        print(round(self.attacking_frame, 1))
-        print(self.attacking)
+        print(f"Attacking frame: {round(self.attacking_frame, 1)}")
+        print(f"Animation frame: {self.attacking_frame}")
+        print(f"are we attacking: {self.attacking}")
 
 
 
