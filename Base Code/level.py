@@ -165,9 +165,11 @@ class YSortCameraGroup(pygame.sprite.Group):
             # draw the sprite image in the same place as the rectangle
             offset_pos = sprite.rect.topleft - self.offset
             print(f"Offset pos: {offset_pos}")
-            print(sprite)
+            if sprite == player:
+                self.display_surface.blit(sprite.image, offset_pos+(-75,-50))
 
-            self.display_surface.blit(sprite.image, offset_pos)
+            else:
+                self.display_surface.blit(sprite.image, offset_pos)
 
 
 
