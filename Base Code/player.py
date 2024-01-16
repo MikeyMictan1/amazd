@@ -82,11 +82,11 @@ class Player(pygame.sprite.Sprite):
         self.attack_right = ('../Graphics/character/TESTS/NEW_attack_right/')
         self.attack_right_lst = self.animation_files(self.attack_right)
 
-        self.attack_left = ('../Graphics/character/attack_left/')
-        self.attack_left_lst = self.animation_files(self.attack_left)
-
-        self.attack_down = ('../Graphics/character/attack_down/')
+        self.attack_down = ('../Graphics/character/TESTS/NEW_attack_down/')
         self.attack_down_lst = self.animation_files(self.attack_down)
+
+        self.attack_up = ('../Graphics/character/TESTS/NEW_attack_up/')
+        self.attack_up_lst = self.animation_files(self.attack_down)
 
     def input(self):
         keys = pygame.key.get_pressed()
@@ -282,13 +282,13 @@ class Player(pygame.sprite.Sprite):
         idle_up_lst = self.animation_files(idle_up_path)
 
         # moving
-        moving_right_path = ('../Graphics/character/moving_right/')
+        moving_right_path = ('../Graphics/character/TESTS/NEW_moving_right/')
         moving_right_lst = self.animation_files(moving_right_path)
 
-        moving_down_path = ('../Graphics/character/moving_down/')
+        moving_down_path = ('../Graphics/character/TESTS/NEW_moving_down/')
         moving_down_lst = self.animation_files(moving_down_path)
 
-        moving_up_path = ('../Graphics/character/moving_up/')
+        moving_up_path = ('../Graphics/character/TESTS/NEW_moving_up/')
         moving_up_lst = self.animation_files(moving_up_path)
 
         # standard animation update
@@ -317,7 +317,7 @@ class Player(pygame.sprite.Sprite):
 
         # making the player face different ways
         new_width = 200
-        new_height = 150
+        new_height = 160
         # attacking (29 PIXELS FOR ATTACK ANIMATION, (50,64) IS STANDARD PLAYER TRANSFORM)
         if self.right and self.attacking == True:
             self.player_direction = "right"
@@ -333,7 +333,14 @@ class Player(pygame.sprite.Sprite):
         elif self.down and self.attacking == True:
             self.player_direction = "down"
             self.image = pygame.image.load(f"{self.attack_down}{self.attack_down_lst[int(self.attacking_frame)]}").convert_alpha()
-            self.image = pygame.transform.scale(self.image, (70, 85))
+            self.image = pygame.transform.scale(self.image, (new_width, new_height))
+
+        elif self.up and self.attacking == True:
+            self.player_direction = "up"
+            self.image = pygame.image.load(
+                f"{self.attack_up}{self.attack_up_lst[int(self.attacking_frame)]}").convert_alpha()
+            self.image = pygame.transform.scale(self.image, (new_width, new_height))
+
 
             #self.image = pygame.transform.scale_by(self.image, 2.2)
             #self.rect = self.image.get_rect(topright=self.pos)
@@ -343,24 +350,24 @@ class Player(pygame.sprite.Sprite):
         elif self.down and keys[pygame.K_s]:
             self.player_direction = "down"
             self.image = pygame.image.load(f"{moving_down_path}{moving_down_lst[int(self.frame)]}").convert_alpha()
-            self.image = pygame.transform.scale(self.image, (self.player_width, self.player_height))
+            self.image = pygame.transform.scale(self.image, (new_width, new_height))
 
         elif self.right and keys[pygame.K_d]:
             self.player_direction = "right"
             self.image = pygame.image.load(f"{moving_right_path}{moving_right_lst[int(self.frame)]}").convert_alpha()
-            self.image = pygame.transform.scale(self.image, (self.player_width, self.player_height))
+            self.image = pygame.transform.scale(self.image, (new_width, new_height))
 
         elif self.left and keys[pygame.K_a]:
             self.player_direction = "left"
             print("FRAME: {self.frame}")
             self.image = pygame.image.load(f"{moving_right_path}{moving_right_lst[int(self.frame)]}").convert_alpha()
             self.image = pygame.transform.flip(self.image, True, False)
-            self.image = pygame.transform.scale(self.image, (self.player_width, self.player_height))
+            self.image = pygame.transform.scale(self.image, (new_width, new_height))
 
         elif self.up and keys[pygame.K_w]:
             self.player_direction = "up"
             self.image = pygame.image.load(f"{moving_up_path}{moving_up_lst[int(self.frame)]}").convert_alpha()
-            self.image = pygame.transform.scale(self.image, (self.player_width, self.player_height))
+            self.image = pygame.transform.scale(self.image, (new_width, new_height))
 
 
         # idling

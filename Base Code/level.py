@@ -164,7 +164,12 @@ class YSortCameraGroup(pygame.sprite.Group):
             # we can add a vector to sprite.rect (an offset that effects where the sprite will be drawn)
             # draw the sprite image in the same place as the rectangle
             offset_pos = sprite.rect.topleft - self.offset
-            self.display_surface.blit(sprite.image, offset_pos)
+            
+            if sprite == player:
+                self.display_surface.blit(sprite.image, offset_pos + (-75, -45))
+
+            else:
+                self.display_surface.blit(sprite.image, offset_pos)
 
 
     def enemy_update(self, player):
