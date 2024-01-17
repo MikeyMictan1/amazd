@@ -108,8 +108,8 @@ class Game:
             if frame >= len(file_lst):
                 frame = 0
             player_image = pygame.image.load(f"{player_path}{file_lst[int(frame)]}").convert_alpha()
-            player_image = pygame.transform.scale(player_image, (160, 200))
-            self.screen.blit(player_image, (screen_width//1.5, screen_height//2.3))
+            player_image = pygame.transform.scale(player_image, (200*3, 160*3))
+            self.screen.blit(player_image, (screen_width//2.2, screen_height//3.5))
 
             # play menu text
             self.play_txt_white = pygame.image.load("../Graphics/menu/play_white.png")

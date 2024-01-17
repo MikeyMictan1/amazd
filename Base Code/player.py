@@ -12,7 +12,7 @@ class Player(pygame.sprite.Sprite):
         self.player_width = 50
         self.player_height = 64
         self.image = pygame.image.load(
-            f"../Graphics/character/TESTS/NEW_idle_right/idleright1.png").convert_alpha()  # making a standard square surface
+            f"../Graphics/character/idle_right/idleright1.png").convert_alpha()  # making a standard square surface
         self.image = pygame.transform.scale(self.image, (50, 64))
 
         self.rect = self.image.get_rect(topleft=pos)
@@ -79,13 +79,13 @@ class Player(pygame.sprite.Sprite):
         self.invulnerability_duration = 1000
 
         # animation attack files
-        self.attack_right = ('../Graphics/character/TESTS/NEW_attack_right/')
+        self.attack_right = ('../Graphics/character/attack_right/')
         self.attack_right_lst = self.animation_files(self.attack_right)
 
-        self.attack_down = ('../Graphics/character/TESTS/NEW_attack_down/')
+        self.attack_down = ('../Graphics/character/attack_down/')
         self.attack_down_lst = self.animation_files(self.attack_down)
 
-        self.attack_up = ('../Graphics/character/TESTS/NEW_attack_up/')
+        self.attack_up = ('../Graphics/character/attack_up/')
         self.attack_up_lst = self.animation_files(self.attack_down)
 
     def input(self):
@@ -272,23 +272,23 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         # all animation files
         # idle
-        idle_right_path = ('../Graphics/character/TESTS/NEW_idle_right/')
+        idle_right_path = ('../Graphics/character/idle_right/')
         idle_right_lst = self.animation_files(idle_right_path)
 
-        idle_down_path = ('../Graphics/character/TESTS/NEW_idle_down/')
+        idle_down_path = ('../Graphics/character/idle_down/')
         idle_down_lst = self.animation_files(idle_down_path)
 
-        idle_up_path = ('../Graphics/character/TESTS/NEW_idle_up/')
+        idle_up_path = ('../Graphics/character/idle_up/')
         idle_up_lst = self.animation_files(idle_up_path)
 
         # moving
-        moving_right_path = ('../Graphics/character/TESTS/NEW_moving_right/')
+        moving_right_path = ('../Graphics/character/moving_right/')
         moving_right_lst = self.animation_files(moving_right_path)
 
-        moving_down_path = ('../Graphics/character/TESTS/NEW_moving_down/')
+        moving_down_path = ('../Graphics/character/moving_down/')
         moving_down_lst = self.animation_files(moving_down_path)
 
-        moving_up_path = ('../Graphics/character/TESTS/NEW_moving_up/')
+        moving_up_path = ('../Graphics/character/moving_up/')
         moving_up_lst = self.animation_files(moving_up_path)
 
         # standard animation update

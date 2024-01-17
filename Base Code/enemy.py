@@ -47,8 +47,9 @@ class Enemy(Entity):
     def import_graphics(self, name):
         self.animations = {"idle":[], "moving":[], "attacking":[]}
         main_path = f"../Graphics/enemy/{name}/"
-        for animation in self.animations.keys():
-            self.animations[animation] = import_folder(main_path + animation)
+        for animation_type in self.animations.keys():  # for idle in dictionary: (loops through and imports everything)
+            # import folder from support file
+            self.animations[animation_type] = import_folder(main_path + animation_type)
 
     def get_player_distance_direction(self, player):
         enemy_dir = pygame.math.Vector2(self.rect.center)
