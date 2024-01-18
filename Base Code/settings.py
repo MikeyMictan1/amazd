@@ -1,7 +1,10 @@
+import pygame
+
 tile_size = 150
 screen_width = 1200
 screen_height = 6 * tile_size  # 21 is len(maze_lst)
 FPS = 60
+
 
 # weapons
 weapon_data = {
