@@ -40,10 +40,9 @@ class Game:
         self.game_on = False
         self.in_menu = True
         self.first_run = True
-        self.first_run_2 = True
 
-        self.keep_running = True
-        self.keep_running_2 = True
+        self.create_levels()
+
 
     def run(self):
         while True:
@@ -65,46 +64,40 @@ class Game:
             if self.in_menu == True:
                 self.menu()
 
+            self.run_levels(self.all_levels[0], self.level)  # inital second level
 
-            if self.level.level_active == False and self.keep_running:  # runs level 2
-                self.game_on = False
-                self.level_2.run()
-
-                if self.first_run:
-                    self.level_2.player_level_carryover(self.level.player.points, self.level.player.health)
-
-                self.first_run = False
-
-                if self.level_2.level_active == False:
-                    self.keep_running = False
-
-
-
-            if self.level_2.level_active == False and self.keep_running_2:  # runs level 3
-                self.level_3.run()
-                if self.first_run_2:
-                    self.level_3.player_level_carryover(self.level_2.player.points, self.level_2.player.health)
-
-                self.first_run_2 = False
-
-                if self.level_3.level_active == False:
-                    self.keep_running_2 = False
+            for i in range(9):  # runs 10 levels
+                self.run_levels(self.all_levels[i+1], self.all_levels[i])
 
 
             pygame.display.update()
             self.clock.tick(FPS)
 
 
-    def run_levels(self, current_level, keep_running, first_run):  # currently does nothing
-        self.game_on = False
-        current_level.run()
+    def run_levels(self, current_level, previous_level):  # currently does nothing
+        if not previous_level.level_active and current_level.level_active:
+            self.game_on = False
+            current_level.run()
 
-        if first_run:
-            ...
+            if self.first_run:
+                current_level.player_level_carryover(previous_level.player.points, previous_level.player.health)
 
+            self.first_run = False
 
-        if self.first_run:
-            current_level.player_level_carryover()
+            if not current_level.level_active:
+                self.first_run = True
+
+    def create_levels(self):  # creates all the levels to play (custimize later)
+        self.all_mazes = []
+
+        self.all_levels = []
+
+        for i in range(10):
+            depth_first_maze = df_maze_generation(width, height)
+            depth_first_maze.main_code()
+            self.all_mazes.append(depth_first_maze.create_maze())
+            self.all_levels.append(Level(self.all_mazes[i]))
+
 
 
     # code for starting menu
