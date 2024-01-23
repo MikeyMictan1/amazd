@@ -9,6 +9,7 @@ from enemy import Enemy
 from coins import Coins
 from exit import Exit
 
+
 class Level:
     def __init__(self, maze_list):
         # get display surface
@@ -115,7 +116,14 @@ class Level:
         if self.player.in_level == False:
             self.level_active = False
             print("level complete")
-        # self.menu()
+
+
+
+    def player_level_carryover(self, new_points, new_health):
+        self.player.points = new_points
+        self.player.health = new_health
+
+
 
 
 
@@ -135,30 +143,7 @@ class YSortCameraGroup(pygame.sprite.Group):
         # getting the offset
         self.offset.y = player.rect.centery - self.half_height
         self.offset.x = player.rect.centerx - self.half_width
-        """
-        # For animated character attack left -> change offset when the character attacks, so that the character is drawn in the correct location, change character location AND offset
-        if player.left and player.attacking and player.attacking_frame == 0.1:
-            print("----------------------------------")
-            player.rect.centerx -= 50
 
-        if player.left and player.attacking and round(player.attacking_frame, 1) == 3.9:
-            print("------------------------------------------------------")
-            player.rect.centerx += 50
-
-        if player.left and player.attacking:
-            ...
-
-        else:
-            self.offset.x = player.rect.centerx - self.half_width
-
-        if player.left and player.direction.x==-1 and player.attacking:
-            print("RUNNING ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-            self.offset.x = player.rect.centerx+50 - self.half_width
-
-
-
-            print("attack left!!!")
-        """
 
         for sprite in self.sprites():
             # we can add a vector to sprite.rect (an offset that effects where the sprite will be drawn)
