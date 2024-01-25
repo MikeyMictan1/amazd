@@ -121,7 +121,7 @@ class df_maze_generation:
                     placed_portal = True
 
                 if (colnum == len(maze_lst[0])-3) and (rownum == len(maze_lst)-1) and (placed_portal == False):
-                    print("REACHED")
+                    #print("REACHED END OF THE MAZE, MAKING DEFAULT EXIT")
                     maze_lst[rownum] = maze_lst[rownum][:colnum] + "O" + maze_lst[rownum][colnum + 1:]
                     placed_portal = True
 

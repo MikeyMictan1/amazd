@@ -7,21 +7,22 @@ from sys import exit
 from menu import OptionPress
 import time
 
-width = 7  # Must be an odd number (21 BASE)
-height = 7  # Must be an odd number (21 BASE)
+width = 5  # Must be an odd number (21 BASE)
+height = 5  # Must be an odd number (21 BASE)
 
 # creation of the maze as a list
 depth_first_maze = df_maze_generation(width, height)
 depth_first_maze.main_code()
 maze_list = depth_first_maze.create_maze()
-maze_list_2 = depth_first_maze.create_maze()
-maze_list_3 = depth_first_maze.create_maze()
-
 
 # fonts and colours
 font = pygame.font.Font("../Fonts/Pixel.ttf", 100)
+tutorial_font = pygame.font.Font("../Fonts/Pixel.ttf", 20)
 white = (255,255,255)
 
+tutorial = ["XYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYXX", "XP       C     U           E      OX", "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"]
+
+print(maze_list)
 for row in maze_list:
     print(row)
 
@@ -34,12 +35,12 @@ class Game:
         self.screen = pygame.display.set_mode((screen_width,screen_height))
         pygame.display.set_caption("Amaz'd")
         self.clock = pygame.time.Clock()
-        self.level = Level(maze_list)  # creates a level imported from the file "level"
-        self.level_2 = Level(maze_list_2)
-        self.level_3 = Level(maze_list_3)
+        #self.level = Level(maze_list)  # creates a level imported from the file "level"
+        self.level = Level(tutorial)
         self.game_on = False
         self.in_menu = True
         self.first_run = True
+        self.num_of_levels = 4
 
         self.create_levels()
 
@@ -60,13 +61,31 @@ class Game:
 
             if self.game_on == True:
                 self.level.run()  # running level command in level.py
+                tutorial_coin_txt = tutorial_font.render("Coin (pickup for 20 points)", 1, white)
+                tutorial_controls_txt = tutorial_font.render("WASD To move, LSHIFT to sprint, SPACE to attack", 1, white)
+                tutorial_stamina_txt = tutorial_font.render("Stamina bar (sprint)", 1, white)
+                tutorial_point_txt_1 = tutorial_font.render("Points (goes down as time passes,", 1, white)
+                tutorial_point_txt_2 = tutorial_font.render("coins and enemy hits to increase)", 1, white)
+                tutorial_health_txt = tutorial_font.render("Health Bar (Enemies can attack to lower it)", 1, white)
+
+                self.screen.blit(tutorial_health_txt, (screen_width // 14, screen_height // 8))
+                self.screen.blit(tutorial_stamina_txt, (screen_width // 14, screen_height // 5))
+                self.screen.blit(tutorial_point_txt_1, (screen_width // 2, screen_height // 8))
+                self.screen.blit(tutorial_point_txt_2, (screen_width // 2, screen_height // 6))
+
+                self.screen.blit(tutorial_coin_txt, (screen_width // 20, screen_height // 1.1))
+                self.screen.blit(tutorial_controls_txt, (screen_width // 2, screen_height // 1.1))
+
+
+
+
 
             if self.in_menu == True:
                 self.menu()
 
             self.run_levels(self.all_levels[0], self.level)  # inital second level
 
-            for i in range(9):  # runs 10 levels
+            for i in range(self.num_of_levels-1):  # runs 10 levels
                 self.run_levels(self.all_levels[i+1], self.all_levels[i])
 
 
@@ -75,25 +94,31 @@ class Game:
 
 
     def run_levels(self, current_level, previous_level):  # currently does nothing
-        if not previous_level.level_active and current_level.level_active:
+        if not previous_level.level_active and current_level.level_active:  # if previous level is not active, and current level is active then run the current level
             self.game_on = False
             current_level.run()
 
-            if self.first_run:
+            if self.first_run:  # if this is the first loop of this function for the current level, then carryover player data
                 current_level.player_level_carryover(previous_level.player.points, previous_level.player.health)
 
-            self.first_run = False
+            self.first_run = False  # makes sure all other loops of the function don't carryover player data
 
-            if not current_level.level_active:
+            if not current_level.level_active:  # if the game isn't active, set first run to true again for the next level
                 self.first_run = True
 
-    def create_levels(self):  # creates all the levels to play (custimize later)
+    def create_levels(self):  # creates all the levels to play (customize later)
         self.all_mazes = []
-
         self.all_levels = []
 
-        for i in range(10):
-            depth_first_maze = df_maze_generation(width, height)
+        maze_width = 7
+        maze_height = 7
+
+        for i in range(self.num_of_levels):
+            if i % 2 == 0:
+                maze_height += i  # makes the mazes bigger every 2 levels
+                maze_width += i
+
+            depth_first_maze = df_maze_generation(maze_width, maze_height)
             depth_first_maze.main_code()
             self.all_mazes.append(depth_first_maze.create_maze())
             self.all_levels.append(Level(self.all_mazes[i]))

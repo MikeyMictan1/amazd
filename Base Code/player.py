@@ -249,7 +249,6 @@ class Player(pygame.sprite.Sprite):
                     coin_sound = pygame.mixer.Sound("../Audio/powerup.mp3")
                     coin_sound.play()
                     coin_sound.set_volume(0.1)
-                    print("Coin Collision!")
 
                     # POINTS
                     self.points += 20
@@ -260,7 +259,7 @@ class Player(pygame.sprite.Sprite):
             for sprite in self.exit_sprites:
                 if sprite.rect.colliderect(self.rect):
                     self.in_level = False
-                    print("Exit Collision!")
+
 
                     # CLOSE GAME
                     #pygame.quit()
