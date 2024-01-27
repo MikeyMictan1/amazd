@@ -10,6 +10,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__(groups)
         # general setup
         self.key_press = pygame.key.get_pressed()
+        self.tutorial_mode = False
 
         # player setup
         self.pos = pos
@@ -398,8 +399,27 @@ class Player(pygame.sprite.Sprite):
 
     def character_hurt(self):
         if self.health <= 0:
+            if not self.tutorial_mode:
+                self.get_high_score()
+                print(self.high_score)
+
             pygame.quit()
             sys.exit()
+
+    def get_high_score(self):
+        with open("high_score.txt", "r+") as high_score_file:  # if file is empty, set score to 0
+            if high_score_file.read() == "":
+                high_score_file.write("0")
+
+        with open("high_score.txt", "r") as high_score_file:  # reads the file for the high score
+            self.high_score = int(high_score_file.read())
+
+        if self.points > self.high_score:  # if the points the user has is greater than the high score, then it becomes the high score
+            self.high_score = int(self.points)
+            with open("high_score.txt", "w") as high_score_file:
+                high_score_file.write(str(self.high_score))
+
+
 
     def update(self):
         self.input()
@@ -412,6 +432,5 @@ class Player(pygame.sprite.Sprite):
         self.points_out()
         self.character_hurt()
         self.heads_up_display()
-
 
 

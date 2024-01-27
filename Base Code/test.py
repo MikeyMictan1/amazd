@@ -1,28 +1,19 @@
-import pygame
-from player import Player
-
-"""
-if not self.level.level_active and self.level_2.level_active:  # runs level 2
-    self.game_on = False
-    self.level_2.run()
-
-    if self.first_run:
-        self.level_2.player_level_carryover(self.level.player.points, self.level.player.health)
-
-    self.first_run = False
-
-    if not self.level_2.level_active:
-        self.first_run = True
 
 
+points = 200
 
-if not self.level_2.level_active and self.level_3.level_active:  # runs level 3
-    self.level_3.run()
-    if self.first_run:
-        self.level_3.player_level_carryover(self.level_2.player.points, self.level_2.player.health)
+with open("high_score.txt", "r+") as high_score_file:  # if file is empty, set score to 0
+    if high_score_file.read() == "":
+        print("here")
+        high_score_file.write("0")
 
-    self.first_run = False
+with open("high_score.txt", "r") as high_score_file:  # reads the file for the high score
+    high_score = int(high_score_file.read())
 
-    if not self.level_3.level_active:
-        self.first_run = True
-"""
+
+if points > high_score:  # if the points the user has is greater than the high score, then it becomes the high score
+    high_score = points
+    with open("high_score.txt", "w") as high_score_file:
+        high_score_file.write(str(high_score))
+
+

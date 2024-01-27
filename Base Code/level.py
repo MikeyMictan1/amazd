@@ -10,6 +10,7 @@ from coins import Coins
 from exit import Exit
 
 
+
 class Level:
     def __init__(self, maze_list):
         # get display surface

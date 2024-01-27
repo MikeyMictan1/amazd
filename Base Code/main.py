@@ -6,6 +6,7 @@ from maze import *
 from sys import exit
 from menu import OptionPress
 import time
+from support import *
 
 width = 5  # Must be an odd number (21 BASE)
 height = 5  # Must be an odd number (21 BASE)
@@ -15,12 +16,17 @@ depth_first_maze = df_maze_generation(width, height)
 depth_first_maze.main_code()
 maze_list = depth_first_maze.create_maze()
 
+tutorial_maze = df_maze_generation(13, 13)
+tutorial_maze.main_code()
+tutorial_maze_list = tutorial_maze.create_maze()
+
 # fonts and colours
 font = pygame.font.Font("../Fonts/Pixel.ttf", 100)
+high_score_font = pygame.font.Font("../Fonts/Pixel.ttf", 50)
 tutorial_font = pygame.font.Font("../Fonts/Pixel.ttf", 20)
 white = (255,255,255)
 
-tutorial = ["XYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYXX", "XP       C     U           E      OX", "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"]
+tutorial = ["XYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYXX", "XP      C     U                        E      OX", "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"]
 
 print(maze_list)
 for row in maze_list:
@@ -35,14 +41,98 @@ class Game:
         self.screen = pygame.display.set_mode((screen_width,screen_height))
         pygame.display.set_caption("Amaz'd")
         self.clock = pygame.time.Clock()
-        #self.level = Level(maze_list)  # creates a level imported from the file "level"
-        self.level = Level(tutorial)
+        self.level = Level(maze_list)  # creates a first level imported from the file "level"
+        self.tutorial = Level(tutorial)
+        self.tutorial_maze = Level(tutorial_maze_list)
+
         self.game_on = False
+        self.tutorial_on = False
         self.in_menu = True
         self.first_run = True
         self.num_of_levels = 4
 
         self.create_levels()
+
+        # tutorial text and graphics
+        self.tutorial_coin_txt = tutorial_font.render("Coin (pickup for 20 points)", 1, white)
+        self.tutorial_controls_txt = tutorial_font.render("LSHIFT to sprint, WASD To move, SPACE to attack", 1, white)
+        self.tutorial_stamina_txt = tutorial_font.render("Stamina bar (sprint)", 1, white)
+        self.tutorial_point_txt_1 = tutorial_font.render("Points (goes down as time passes,", 1, white)
+        self.tutorial_point_txt_2 = tutorial_font.render("coins and enemy hits to increase)", 1, white)
+        self.tutorial_health_txt = tutorial_font.render("Health Bar (Enemies can attack to lower it)", 1, white)
+        self.tutorial_objective_txt = tutorial_font.render(
+            "REACH THE PORTAL AT THE END OF THE MAZE WITH AS MANY POINTS AS POSSIBLE!", 1, white)
+        self.tutorial_death_txt = tutorial_font.render(
+            "RUNNING OUT OF HEARTS ENDS THE GAME", 1, white)
+
+        self.tutorial_coin_image = pygame.image.load(f"../Graphics/powerups/coin.png").convert_alpha()
+        self.tutorial_coin_image = pygame.transform.scale(self.tutorial_coin_image, (70, 70))
+
+        self.menu_graphics = import_folder("../Graphics/menu/tutorial_keys")
+        self.tutorial_w_key_image = pygame.transform.scale(self.menu_graphics[5], (40, 40))
+        self.tutorial_a_key_image = pygame.transform.scale(self.menu_graphics[0], (40, 40))
+        self.tutorial_s_key_image = pygame.transform.scale(self.menu_graphics[4], (40, 40))
+        self.tutorial_d_key_image = pygame.transform.scale(self.menu_graphics[1], (40, 40))
+
+        self.tutorial_lshift_key_image = pygame.transform.scale(self.menu_graphics[2], (70, 40))
+        self.tutorial_space_key_image = pygame.transform.scale(self.menu_graphics[3], (70, 40))
+
+
+
+    def run_tutorial(self):
+        if self.tutorial_on:  # runs the game tutorial
+
+            #with open("high_score.txt", "r+") as high_score_file:  # if file is empty, set score to 0
+            #    if high_score_file.read() == "":
+            #        high_score_file.write("0")
+
+            #with open("high_score.txt", "r") as high_score_file:  # reads the file for the high score
+            #    self.real_high_score = int(high_score_file.read())
+
+            self.tutorial.run()
+            self.tutorial.player.tutorial_mode = True
+            # images
+            self.screen.blit(self.tutorial_coin_image, (screen_width // 6, screen_height // 1.22))
+            self.screen.blit(self.tutorial_space_key_image, (screen_width // 1.3, screen_height // 1.2))
+            self.screen.blit(self.tutorial_lshift_key_image, (screen_width // 2, screen_height // 1.2))
+
+            self.screen.blit(self.tutorial_w_key_image, (screen_width // 1.55, screen_height // 1.26))
+            self.screen.blit(self.tutorial_a_key_image, (screen_width // 1.63, screen_height // 1.2))
+            self.screen.blit(self.tutorial_s_key_image, (screen_width // 1.55, screen_height // 1.2))
+            self.screen.blit(self.tutorial_d_key_image, (screen_width // 1.48, screen_height // 1.2))
+
+            # text
+            self.screen.blit(self.tutorial_health_txt, (screen_width // 14, screen_height // 8))
+            self.screen.blit(self.tutorial_stamina_txt, (screen_width // 14, screen_height // 5))
+            self.screen.blit(self.tutorial_point_txt_1, (screen_width // 2, screen_height // 8))
+            self.screen.blit(self.tutorial_point_txt_2, (screen_width // 2, screen_height // 6))
+
+            self.screen.blit(self.tutorial_coin_txt, (screen_width // 20, screen_height // 1.1))
+            self.screen.blit(self.tutorial_controls_txt, (screen_width // 2, screen_height // 1.1))
+
+
+
+        if not self.tutorial.level_active and not self.in_menu:  # after tutorial explanation ends, start tutorial maze
+            self.tutorial_maze.run()
+            self.tutorial_maze.player.tutorial_mode = True
+            self.screen.blit(self.tutorial_objective_txt,
+                             (screen_width // 2 - self.tutorial_objective_txt.get_width() // 2, screen_height // 1.2))
+
+            self.screen.blit(self.tutorial_death_txt,
+                             (screen_width // 2 - self.tutorial_death_txt.get_width() // 2, screen_height // 1.1))
+
+            self.tutorial_on = False  # tutorial set to not be on
+
+
+        if not self.tutorial.level_active and self.in_menu == False and not self.tutorial_maze.level_active:  # when you reach the end of the tutorial maze
+            self.tutorial = Level(tutorial)  # resets tutorial after its beaten
+            self.tutorial_maze = Level(tutorial_maze_list)
+            self.in_menu = True  # user goes back to the menu
+
+            # makes sure high score doesn't change as a result of the tutorial
+            #with open("high_score.txt", "w") as high_score_file:
+            #    high_score_file.write(str(self.real_high_score))
+
 
 
     def run(self):
@@ -61,26 +151,11 @@ class Game:
 
             if self.game_on == True:
                 self.level.run()  # running level command in level.py
-                tutorial_coin_txt = tutorial_font.render("Coin (pickup for 20 points)", 1, white)
-                tutorial_controls_txt = tutorial_font.render("WASD To move, LSHIFT to sprint, SPACE to attack", 1, white)
-                tutorial_stamina_txt = tutorial_font.render("Stamina bar (sprint)", 1, white)
-                tutorial_point_txt_1 = tutorial_font.render("Points (goes down as time passes,", 1, white)
-                tutorial_point_txt_2 = tutorial_font.render("coins and enemy hits to increase)", 1, white)
-                tutorial_health_txt = tutorial_font.render("Health Bar (Enemies can attack to lower it)", 1, white)
 
-                self.screen.blit(tutorial_health_txt, (screen_width // 14, screen_height // 8))
-                self.screen.blit(tutorial_stamina_txt, (screen_width // 14, screen_height // 5))
-                self.screen.blit(tutorial_point_txt_1, (screen_width // 2, screen_height // 8))
-                self.screen.blit(tutorial_point_txt_2, (screen_width // 2, screen_height // 6))
-
-                self.screen.blit(tutorial_coin_txt, (screen_width // 20, screen_height // 1.1))
-                self.screen.blit(tutorial_controls_txt, (screen_width // 2, screen_height // 1.1))
-
-
-
-
+            self.run_tutorial()  # runs tutorial when needed
 
             if self.in_menu == True:
+                print("in menu")
                 self.menu()
 
             self.run_levels(self.all_levels[0], self.level)  # inital second level
@@ -154,6 +229,13 @@ class Game:
             menu_txt = font.render("Main Menu", 1, white)
             self.screen.blit(menu_txt, (screen_width//2 - menu_txt.get_width() // 2, screen_height//5))
 
+            # high score text
+            with open("high_score.txt", "r") as high_score_file:  # reads the file for the high score
+                self.high_score = int(high_score_file.read())
+
+            high_score_txt = high_score_font.render(f"High Score: {self.high_score}", 1, white)
+            self.screen.blit(high_score_txt, (screen_width // 2 - high_score_txt.get_width() // 2, screen_height // 1.2))
+
             # animated character on menu screen
             player_path = ('../Graphics/character/idle_down/')
 
@@ -169,27 +251,55 @@ class Game:
             player_image = pygame.transform.scale(player_image, (200*3, 160*3))
             self.screen.blit(player_image, (screen_width//2.2, screen_height//3.5))
 
+            # reset high score button
+            self.reset_score_white = pygame.image.load("../Graphics/menu/high_score_white.png")
+            self.reset_score_yellow = pygame.image.load("../Graphics/menu/high_score_yellow.png")
+            self.reset_score_pos = (screen_width // 10, screen_height // 1.25)
+
+            self.reset_score_option = OptionPress(self.reset_score_white, self.reset_score_yellow, self.reset_score_pos)
+            self.reset_score_option.draw(pygame.display.get_surface())
+
+            if self.reset_score_option.pressed:
+                with open("high_score.txt", "w") as high_score_file:
+                    high_score_file.write("0")
+
+
             # play menu text
             self.play_txt_white = pygame.image.load("../Graphics/menu/play_white.png")
             self.play_txt_yellow = pygame.image.load("../Graphics/menu/play_yellow.png")
-            self.play_txt_pos = (screen_width//10, screen_height//2.5)
+            self.play_txt_pos = (screen_width//10, screen_height//2.7)
 
             self.play_option = OptionPress(self.play_txt_white, self.play_txt_yellow, self.play_txt_pos)
             self.play_option.draw(pygame.display.get_surface())
 
-            # plays the game if "play" pressed
-            if self.play_option.pressed == True:
+            if self.play_option.pressed == True:  # plays the game if "play" pressed
                 menu_music.stop()
                 enter_maze_sound.play()
                 self.game_on = True
                 self.in_menu = False
+                print("PRESSED GAME")
+
+            # tutorial code
+            self.tutorial_txt_white = pygame.image.load("../Graphics/menu/tutorial_white.png")
+            self.tutorial_txt_yellow = pygame.image.load("../Graphics/menu/tutorial_yellow.png")
+            self.tutorial_txt_pos = (screen_width//10, screen_height//1.93)
+
+            self.tutorial_option = OptionPress(self.tutorial_txt_white, self.tutorial_txt_yellow, self.tutorial_txt_pos)
+            self.tutorial_option.draw(pygame.display.get_surface())
+
+            if self.tutorial_option.pressed == True:
+                menu_music.stop()
+                enter_maze_sound.play()
+                self.tutorial_on = True
+                self.in_menu = False
+                print("PRESSED TUTORIAL")
 
 
 
             # quit menu text
             self.quit_txt_white = pygame.image.load("../Graphics/menu/quit_white.png")
             self.quit_txt_yellow = pygame.image.load("../Graphics/menu/quit_yellow.png")
-            self.quit_txt_pos = (screen_width//10, screen_height//1.7)
+            self.quit_txt_pos = (screen_width//10, screen_height//1.5)
 
             self.quit_option = OptionPress(self.quit_txt_white, self.quit_txt_yellow, self.quit_txt_pos)
             self.quit_option.draw(pygame.display.get_surface())
@@ -209,3 +319,10 @@ game = Game()
 
 while True:
     game.run()
+
+
+# ITENARY
+# boss fights
+# endless mode
+# game over screen
+# load levels as they are needed
