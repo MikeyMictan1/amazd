@@ -7,15 +7,13 @@ from sys import exit
 from menu import OptionPress
 import time
 from support import *
+from customlevels import tutorial, boss_arena
 
 width = 5  # Must be an odd number (21 BASE)
 height = 5  # Must be an odd number (21 BASE)
 
-# creation of the maze as a list
-depth_first_maze = df_maze_generation(width, height)
-depth_first_maze.main_code()
-maze_list = depth_first_maze.create_maze()
 
+# creates the tutorial maze
 tutorial_maze = df_maze_generation(13, 13)
 tutorial_maze.main_code()
 tutorial_maze_list = tutorial_maze.create_maze()
@@ -26,11 +24,9 @@ high_score_font = pygame.font.Font("../Fonts/Pixel.ttf", 50)
 tutorial_font = pygame.font.Font("../Fonts/Pixel.ttf", 20)
 white = (255,255,255)
 
-tutorial = ["XYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYXX", "XP      C     U                        E      OX", "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"]
-
-print(maze_list)
-for row in maze_list:
+for row in tutorial_maze_list:
     print(row)
+
 
 #keys = pygame.key.get_pressed()
 # ----------------------------------------
@@ -41,15 +37,16 @@ class Game:
         self.screen = pygame.display.set_mode((screen_width,screen_height))
         pygame.display.set_caption("Amaz'd")
         self.clock = pygame.time.Clock()
-        self.level = Level(maze_list)  # creates a first level imported from the file "level"
+
         self.tutorial = Level(tutorial)
+        self.boss_level = Level(boss_arena)
         self.tutorial_maze = Level(tutorial_maze_list)
 
         self.game_on = False
         self.tutorial_on = False
         self.in_menu = True
         self.first_run = True
-        self.num_of_levels = 4
+        self.num_of_levels = 2
 
         self.create_levels()
 
@@ -76,6 +73,12 @@ class Game:
 
         self.tutorial_lshift_key_image = pygame.transform.scale(self.menu_graphics[2], (70, 40))
         self.tutorial_space_key_image = pygame.transform.scale(self.menu_graphics[3], (70, 40))
+
+        # self.log
+        self.logo_image = pygame.image.load(f"../Graphics/amazd_logo.png")
+        pygame.display.set_icon(self.logo_image)
+        self.logo_image = pygame.transform.scale(self.logo_image, (140, 280))
+
 
 
 
@@ -150,7 +153,7 @@ class Game:
 
 
             if self.game_on == True:
-                self.level.run()  # running level command in level.py
+                self.all_levels[0].run()  # runs the first level
 
             self.run_tutorial()  # runs tutorial when needed
 
@@ -158,11 +161,16 @@ class Game:
                 print("in menu")
                 self.menu()
 
-            self.run_levels(self.all_levels[0], self.level)  # inital second level
-
-            for i in range(self.num_of_levels-1):  # runs 10 levels
+            for i in range(self.num_of_levels-1):  # runs the rest of the levels
                 self.run_levels(self.all_levels[i+1], self.all_levels[i])
 
+            # after all levels, plays the boss level
+            self.run_levels(self.boss_level, self.all_levels[self.num_of_levels-1])
+            if not self.in_menu and not self.boss_level.level_active:  # when you reach the end of the tutorial maze
+                self.boss_level.player.get_high_score()
+                self.create_levels()  # resets all levels
+                self.boss_level = Level(boss_arena)  # resets the boss fight
+                self.in_menu = True
 
             pygame.display.update()
             self.clock.tick(FPS)
@@ -223,6 +231,9 @@ class Game:
             background = pygame.transform.scale(pygame.image.load("../Graphics/menu/menubackground.png"),(screen_width, screen_height))
             self.screen.blit(background, (0, 0))
 
+            self.screen.blit(self.logo_image,
+                             (screen_width // 2 - self.logo_image.get_width() // 2, screen_height // 2 - self.logo_image.get_height() // 2))
+
             title = font.render("Amaz'd", 1, white)
             self.screen.blit(title, (screen_width//2 - title.get_width() // 2, screen_height//20))
 
@@ -235,6 +246,8 @@ class Game:
 
             high_score_txt = high_score_font.render(f"High Score: {self.high_score}", 1, white)
             self.screen.blit(high_score_txt, (screen_width // 2 - high_score_txt.get_width() // 2, screen_height // 1.2))
+
+
 
             # animated character on menu screen
             player_path = ('../Graphics/character/idle_down/')
