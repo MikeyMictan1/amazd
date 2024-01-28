@@ -46,7 +46,7 @@ class Game:
         self.tutorial_on = False
         self.in_menu = True
         self.first_run = True
-        self.num_of_levels = 1
+        self.num_of_levels = 10
 
         self.create_levels()
 
@@ -200,9 +200,8 @@ class Game:
 
         for i in range(self.num_of_levels):
             if i % 2 == 0:
-                maze_height += i  # makes the mazes bigger every 2 levels
+                maze_height += i  # makes the mazes bigger every 2 levels by an addition of "i", so 7 7, 9 9, 13 13, etc
                 maze_width += i
-
             depth_first_maze = df_maze_generation(maze_width, maze_height)
             depth_first_maze.main_code()
             self.all_mazes.append(depth_first_maze.create_maze())
