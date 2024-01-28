@@ -46,7 +46,7 @@ class Game:
         self.tutorial_on = False
         self.in_menu = True
         self.first_run = True
-        self.num_of_levels = 10
+        self.num_of_levels = 1
 
         self.create_levels()
 
@@ -213,16 +213,16 @@ class Game:
     # code for starting menu
     def menu(self):
         # initialising needed variables
-        keys = pygame.key.get_pressed()
+        pygame.mixer.stop()
+
         frame = 0
         frame_speed = 0.1
-        enter_maze_sound = pygame.mixer.Sound("../Audio/enter_maze_music.mp3") # undertale
         menu_music = pygame.mixer.Sound("../Audio/maze_music.mp3")
-        menu_music.play()
+        self.maze_music_1 = pygame.mixer.Sound("../Audio/in_maze_music.mp3")  # undertale
+        menu_music.play(999)
         menu_music.set_volume(0.1)
 
         while self.in_menu == True:
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -289,10 +289,14 @@ class Game:
 
             if self.play_option.pressed == True:  # plays the game if "play" pressed
                 menu_music.stop()
-                enter_maze_sound.play()
+                self.maze_music_1.play(999)
+                self.maze_music_1.set_volume(0.1)
                 self.game_on = True
                 self.in_menu = False
                 print("PRESSED GAME")
+
+
+
 
             # tutorial code
             self.tutorial_txt_white = pygame.image.load("../Graphics/menu/tutorial_white.png")
@@ -304,7 +308,8 @@ class Game:
 
             if self.tutorial_option.pressed == True:
                 menu_music.stop()
-                enter_maze_sound.play()
+                self.maze_music_1.play()
+                self.maze_music_1.set_volume(0.1)
                 self.tutorial_on = True
                 self.in_menu = False
                 print("PRESSED TUTORIAL")

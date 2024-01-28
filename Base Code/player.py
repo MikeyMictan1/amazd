@@ -91,6 +91,11 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (self.rect_width, self.rect_height))
         self.rect = self.image.get_rect(topleft=pos)
 
+        self.move_count = 0
+
+        # walking audio
+        self.walk_sound = pygame.mixer.Sound("../Audio/walk_sound.mp3")
+
 
     def import_graphics(self):
         self.animations = {"attack_down":[],"attack_right":[],"attack_up":[],
@@ -197,6 +202,17 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += self.direction.y * speed
         self.collision("vertical")
 
+        if self.move_count == 1:
+            self.walk_sound.play()  # if we start to walk, then play walking sound
+            self.walk_sound.set_volume(0.5)
+        self.move_count += 1
+
+        if self.direction == [0,0]:
+            self.walk_sound.stop()  # once we stop walking, stop the walking playing sound
+            self.move_count = 0
+
+
+
     def cooldown(self):
         current_time = pygame.time.get_ticks()
 
@@ -275,6 +291,11 @@ class Player(pygame.sprite.Sprite):
         if direction == "vertical" or direction == "horizontal":
             for sprite in self.exit_sprites:
                 if sprite.rect.colliderect(self.rect):
+                    portal_sound = pygame.mixer.Sound("../Audio/portal.mp3")
+                    portal_sound.play()
+                    self.walk_sound.stop()  # makes sure walking sound stops
+                    portal_sound.set_volume(0.1)
+
                     self.in_level = False
 
 
