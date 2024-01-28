@@ -86,6 +86,7 @@ class df_maze_generation:
                 enemy_chance = random.randint(0,20)
                 coin_chance = random.randint(0, 20)
                 exit_chance = random.randint(0, 10)
+                health_pot_chance = random.randint(0, 200)
 
 
 
@@ -109,6 +110,10 @@ class df_maze_generation:
                 # adding coins to the map
                 if cell == " " and coin_chance == 0:
                     maze_lst[rownum] = maze_lst[rownum][:colnum] + "C" + maze_lst[rownum][colnum + 1:]
+
+                # adding coins to the map
+                if cell == " " and health_pot_chance == 0:
+                    maze_lst[rownum] = maze_lst[rownum][:colnum] + "H" + maze_lst[rownum][colnum + 1:]
 
                 # adding enemies to the map
                 elif cell == " " and enemy_chance == 0:

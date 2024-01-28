@@ -8,7 +8,7 @@ from weapon import Weapon
 from enemy import Enemy
 from coins import Coins
 from exit import Exit
-
+from healthpotion import HealthPot
 
 
 class Level:
@@ -21,6 +21,7 @@ class Level:
         self.obstacle_sprites = pygame.sprite.Group()
         self.powerup_sprites = pygame.sprite.Group()
         self.coin_sprites = pygame.sprite.Group()
+        self.health_pot_sprites = pygame.sprite.Group()
         self.exit_sprites = pygame.sprite.Group()
         self.attackable_sprites = pygame.sprite.Group()
         self.attack_sprites = pygame.sprite.Group()
@@ -50,7 +51,7 @@ class Level:
                 if cell == "Y":  # if there are walls
                     Wall_Tile_Visible((x,y),[self.visible_sprites, self.obstacle_sprites])  # all the groups that belong to the sprite class
 
-                if cell == " " or cell == "P" or cell == "U" or cell == "E" or cell == "C" or cell == "O" or cell == "S":  # if there are floor tiles, including on the player
+                if cell == " " or cell == "P" or cell == "U" or cell == "E" or cell == "C" or cell == "O" or cell == "S" or cell == "H":  # if there are floor tiles, including on the player
                     self.floor = Floor_Tile((x,y),[self.visible_sprites])  # all the groups that belong to the sprite class !
 
         # draws the player on top of all the other sprites
@@ -59,7 +60,7 @@ class Level:
                 x = col_index * tile_size
                 y = row_index * tile_size
                 if cell == "P":  # if there is a player
-                    self.player = Player((x,y),[self.visible_sprites], self.obstacle_sprites, self.powerup_sprites, self.coin_sprites,self.exit_sprites , self.create_attack, self.destroy_attack)
+                    self.player = Player((x,y),[self.visible_sprites], self.obstacle_sprites, self.powerup_sprites, self.coin_sprites, self.health_pot_sprites, self.exit_sprites , self.create_attack, self.destroy_attack)
 
                 if cell == "U":
                     self.powerup = Powerups((x,y),[self.visible_sprites, self.powerup_sprites])
@@ -78,6 +79,9 @@ class Level:
                                        [self.visible_sprites, self.attackable_sprites],
                                        self.obstacle_sprites,
                                        self.damage_player)
+
+                if cell == "H":
+                    self.health_pot = HealthPot((x,y),[self.visible_sprites, self.health_pot_sprites])
 
                 if cell == "O":
                     self.exit = Exit((x,y), [self.visible_sprites, self.exit_sprites])

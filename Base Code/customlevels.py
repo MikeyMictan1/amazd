@@ -1,12 +1,13 @@
-tutorial = ["XYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYXX",
-            "XP      C     U                        E      OX",
-            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"]
+tutorial = ["XYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYXX",
+            "XP      C     U                        E         OX",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"]
 
+# ! used as blank space (can be any char that doesn't already represent a tile)
+boss_arena = ["!!!!!!XXXYYYYYYYYYYYYYYYYYYXX",
+              "!!!!!!XXC        C        UXX",
+              "XXYYYYYY                   XX",
+              "XXP  H           S        OXX",
+              "YYYYYYXX                   XX",
+              "!!!!!!XXU        C        CXX",
+              "!!!!!!YYYYYYYYYYYYYYYYYYYYYYY"]
 
-boss_arena = ["XXXYYYYYYYYYYYYYYYYYYXX",
-         "XXP                 UXX",
-         "XX                   XX",
-         "XXC       S         CXX",
-         "XX                 O XX",
-         "XXU        C        UXX",
-         "YYYYYYYYYYYYYYYYYYYYYYY"]

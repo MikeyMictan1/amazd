@@ -6,7 +6,7 @@ from math import cos
 from support import *
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, obstacle_sprites, powerup_sprites, coin_sprites,exit_sprites , create_attack, destroy_attack):
+    def __init__(self, pos, groups, obstacle_sprites, powerup_sprites, coin_sprites,health_pot_sprites,exit_sprites , create_attack, destroy_attack):
         super().__init__(groups)
         # general setup
         self.key_press = pygame.key.get_pressed()
@@ -66,6 +66,7 @@ class Player(pygame.sprite.Sprite):
         self.powerup_sprites = powerup_sprites
         self.coin_sprites = coin_sprites
         self.exit_sprites = exit_sprites
+        self.heath_pot_sprites = health_pot_sprites
 
         # powerups
         self.powerup_active = 0
@@ -73,6 +74,7 @@ class Player(pygame.sprite.Sprite):
         # stats
         self.stats = {"health":700, "attack":10}
         self.health = self.stats["health"]
+        self.max_health = self.stats["health"]
         self.points = 501
         self.in_level = True
 
@@ -247,12 +249,26 @@ class Player(pygame.sprite.Sprite):
             for sprite in self.coin_sprites:
                 if sprite.rect.colliderect(self.rect):
                     # SOUND
-                    coin_sound = pygame.mixer.Sound("../Audio/powerup.mp3")
+                    coin_sound = pygame.mixer.Sound("../Audio/coin.mp3")
                     coin_sound.play()
                     coin_sound.set_volume(0.1)
 
                     # POINTS
                     self.points += 20
+                    sprite.kill()
+
+        # HEALTH POTION
+        if direction == "vertical" or direction == "horizontal":
+            for sprite in self.heath_pot_sprites:
+                if sprite.rect.colliderect(self.rect):
+                    # SOUND
+                    health_pot_sound = pygame.mixer.Sound("../Audio/health_pot.mp3")
+                    health_pot_sound.play()
+                    health_pot_sound.set_volume(0.5)
+
+                    # POINTS
+                    if self.max_health != self.health:
+                        self.health += 100
                     sprite.kill()
 
         # EXIT
