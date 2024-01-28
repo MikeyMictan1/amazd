@@ -50,7 +50,7 @@ class Level:
                 if cell == "Y":  # if there are walls
                     Wall_Tile_Visible((x,y),[self.visible_sprites, self.obstacle_sprites])  # all the groups that belong to the sprite class
 
-                if cell == " " or cell == "P" or cell == "U" or cell == "E" or cell == "C" or cell == "O":  # if there are floor tiles, including on the player
+                if cell == " " or cell == "P" or cell == "U" or cell == "E" or cell == "C" or cell == "O" or cell == "S":  # if there are floor tiles, including on the player
                     self.floor = Floor_Tile((x,y),[self.visible_sprites])  # all the groups that belong to the sprite class !
 
         # draws the player on top of all the other sprites
@@ -69,6 +69,12 @@ class Level:
 
                 if cell == "E":
                     self.enemy = Enemy("skeleton", (x,y),
+                                       [self.visible_sprites, self.attackable_sprites],
+                                       self.obstacle_sprites,
+                                       self.damage_player)
+
+                if cell == "S":
+                    self.enemy_slime = Enemy("slime", (x,y),
                                        [self.visible_sprites, self.attackable_sprites],
                                        self.obstacle_sprites,
                                        self.damage_player)

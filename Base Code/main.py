@@ -46,7 +46,7 @@ class Game:
         self.tutorial_on = False
         self.in_menu = True
         self.first_run = True
-        self.num_of_levels = 2
+        self.num_of_levels = 1
 
         self.create_levels()
 
@@ -166,7 +166,9 @@ class Game:
 
             # after all levels, plays the boss level
             self.run_levels(self.boss_level, self.all_levels[self.num_of_levels-1])
-            if not self.in_menu and not self.boss_level.level_active:  # when you reach the end of the tutorial maze
+
+
+            if not self.in_menu and not self.boss_level.level_active:  # when you reach the end of the maze
                 self.boss_level.player.get_high_score()
                 self.create_levels()  # resets all levels
                 self.boss_level = Level(boss_arena)  # resets the boss fight

@@ -26,7 +26,7 @@ class Enemy(Entity):
         monster_info = monster_data[self.monster_name]
         self.health = monster_info["health"]
         self.speed = monster_info["speed"]
-        self.attack_damage = monster_info["health"]
+        self.attack_damage = monster_info["damage"]
         self.resistance = monster_info["resistance"]
         self.attack_radius = monster_info["attack_radius"]
         self.notice_radius = monster_info["notice_radius"]
@@ -104,7 +104,11 @@ class Enemy(Entity):
             self.frame_index = 0
 
         self.image = animation[int(self.frame_index)]
-        self.image = pygame.transform.scale(self.image, (50, 64))
+        if self.monster_name == "slime":
+            self.image = pygame.transform.scale(self.image, (300, 300))
+
+        else:
+            self.image = pygame.transform.scale(self.image, (50, 64))
         self.rect = self.image.get_rect(center = self.hitbox.center)
 
         if not self.can_damage:
