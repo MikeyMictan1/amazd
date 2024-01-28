@@ -46,7 +46,7 @@ class Game:
         self.tutorial_on = False
         self.in_menu = True
         self.first_run = True
-        self.num_of_levels = 1
+        self.num_of_levels = 10
 
         self.create_levels()
 
@@ -54,8 +54,8 @@ class Game:
         self.tutorial_coin_txt = tutorial_font.render("Coin (pickup for 20 points)", 1, white)
         self.tutorial_controls_txt = tutorial_font.render("LSHIFT to sprint, WASD To move, SPACE to attack", 1, white)
         self.tutorial_stamina_txt = tutorial_font.render("Stamina bar (sprint)", 1, white)
-        self.tutorial_point_txt_1 = tutorial_font.render("Points (goes down as time passes,", 1, white)
-        self.tutorial_point_txt_2 = tutorial_font.render("coins and enemy hits to increase)", 1, white)
+        self.tutorial_point_txt_1 = tutorial_font.render("Points (start at 500, they go down as time", 1, white)
+        self.tutorial_point_txt_2 = tutorial_font.render("passes, coins and enemy hits increase points)", 1, white)
         self.tutorial_health_txt = tutorial_font.render("Health Bar (Enemies can attack to lower it)", 1, white)
         self.tutorial_objective_txt = tutorial_font.render(
             "REACH THE PORTAL AT THE END OF THE MAZE WITH AS MANY POINTS AS POSSIBLE!", 1, white)

@@ -13,6 +13,7 @@ class OptionPress(pygame.sprite.Sprite):
 
         self.button_rect = self.option_image.get_rect(topleft = self.position)
         self.pressed = False
+        self.count = 0
 
 
     def MousePress(self):
@@ -22,12 +23,13 @@ class OptionPress(pygame.sprite.Sprite):
         if self.button_rect.collidepoint(pos):  # change pos variable name bcz misleading
             option_hover_sound.play()
             self.option_image = self.image2
+
             if pygame.mouse.get_pressed()[0] == 1 and self.pressed == False:
                 self.pressed = True
 
-
         else:
             self.option_image = self.image1
+            self.count = 0
 
 
     def draw(self, screen):
