@@ -19,8 +19,7 @@ monster_data = {"skeleton":
                     {"health":400, "damage":100, "speed":7, "resistance":3, "attack_radius":200, "notice_radius":760}
 }
 
-
-
-
+# colours
+white = (255,255,255)
 
 

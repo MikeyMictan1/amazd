@@ -4,6 +4,7 @@ import numpy
 import time
 from math import cos
 from support import *
+from gameover import GameOver
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, obstacle_sprites, powerup_sprites, coin_sprites,health_pot_sprites,exit_sprites , create_attack, destroy_attack):
@@ -95,6 +96,13 @@ class Player(pygame.sprite.Sprite):
 
         # walking audio
         self.walk_sound = pygame.mixer.Sound("../Audio/walk_sound.mp3")
+
+        # other hud stuff
+        controls_font = pygame.font.Font("../Fonts/Pixel.ttf", 30)
+        self.controls_instructions = pygame.image.load("../Graphics/controls/controls_instruction.png").convert_alpha()
+        self.controls_instructions = pygame.transform.scale(self.controls_instructions, (50,50))
+        self.controls_instructions_txt = controls_font.render("Controls",1,self.white)
+
 
 
     def import_graphics(self):
@@ -434,14 +442,15 @@ class Player(pygame.sprite.Sprite):
         self.display_surface.blit(self.health_image,
                                   (screen_width//2 - 575, screen_height // 7))
 
+        self.display_surface.blit(self.controls_instructions, (screen_width//20, screen_height//1.07))
+        self.display_surface.blit(self.controls_instructions_txt, (screen_width//10, screen_height//1.05))
+
     def character_hurt(self):
         if self.health <= 0:
             if not self.tutorial_mode:
                 self.get_high_score()
                 print(self.high_score)
 
-            pygame.quit()
-            sys.exit()
 
     def get_high_score(self):
         with open("high_score.txt", "r+") as high_score_file:  # if file is empty, set score to 0

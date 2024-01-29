@@ -9,7 +9,7 @@ from enemy import Enemy
 from coins import Coins
 from exit import Exit
 from healthpotion import HealthPot
-
+from gameover import GameOver
 
 class Level:
     def __init__(self, maze_list):
@@ -35,7 +35,10 @@ class Level:
 
         #
         self.level_active = True
+        self.game_over_active = True
+        self.level_type = "normal"
 
+        self.game_over = GameOver(self.player)
 
 
 
@@ -127,6 +130,14 @@ class Level:
         if self.player.in_level == False:
             self.level_active = False
             print("level complete")
+
+        if self.player.health <= 0:  # causes game over screen, and checks if the user has gone to the menu from it
+            print("DEAD PLAYER")
+            self.game_over.run()
+            if self.game_over.game_over_state == False:
+                self.game_over_active = False
+
+            self.player_alive = False
 
 
 
