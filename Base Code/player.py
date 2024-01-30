@@ -276,7 +276,7 @@ class Player(pygame.sprite.Sprite):
                     # SOUND
                     coin_sound = pygame.mixer.Sound("../Audio/coin.mp3")
                     coin_sound.play()
-                    coin_sound.set_volume(0.1)
+                    coin_sound.set_volume(0.5)
 
                     # POINTS
                     self.points += 20
