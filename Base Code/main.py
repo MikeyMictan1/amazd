@@ -51,7 +51,7 @@ class Game:
         self.tutorial_on = False
         self.in_menu = True
         self.first_run = True
-        self.num_of_levels = 2
+        self.num_of_levels = 8  # standard should be 10
 
         self.create_levels()
 
@@ -110,6 +110,9 @@ class Game:
 
         self.control_set_image = pygame.image.load("../Graphics/controls/control_set.png")
         self.control_set_image = pygame.transform.scale(self.control_set_image, (500,600))
+
+        self.in_game_menu_sound = pygame.mixer.Sound("../Audio/open_maze_menu1.mp3")
+
 
     def run_tutorial(self):
         if self.tutorial_on:  # runs the game tutorial
@@ -174,11 +177,15 @@ class Game:
 
                 # in-game menu
                 if event.type == pygame.KEYDOWN and (event.key == pygame.K_TAB or event.key == pygame.K_ESCAPE):
+                    self.in_game_menu_sound.play()
+                    self.in_game_menu_sound.set_volume(0.1)
                     print("tryna escape")
                     self.escape_counter += 1
                     self.in_game_menu = True
 
                 if event.type == pygame.KEYDOWN and (event.key == pygame.K_c):
+                    self.in_game_menu_sound.play()
+                    self.in_game_menu_sound.set_volume(0.1)
                     self.controls_counter += 1
                     self.in_controls_menu = True
                     print("tryna see controls")

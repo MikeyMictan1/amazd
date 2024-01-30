@@ -211,9 +211,10 @@ class Player(pygame.sprite.Sprite):
         self.collision("vertical")
 
         if self.move_count == 1:
-            self.walk_sound.play()  # if we start to walk, then play walking sound
+            self.walk_sound.play(999)  # if we start to walk, then play walking sound
             self.walk_sound.set_volume(0.5)
         self.move_count += 1
+
 
         if self.direction == [0,0]:
             self.walk_sound.stop()  # once we stop walking, stop the walking playing sound
