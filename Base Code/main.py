@@ -51,7 +51,7 @@ class Game:
         self.tutorial_on = False
         self.in_menu = True
         self.first_run = True
-        self.num_of_levels = 8  # standard should be 10
+        self.num_of_levels = 1  # standard should be 10
 
         self.create_levels()
 
