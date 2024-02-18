@@ -1,10 +1,8 @@
 import pygame
-from settings import *
+from globalfunctions import *
 
-class OptionPress(pygame.sprite.Sprite):
+class OptionPress:
     def __init__(self, image1, image2, position):
-
-        super().__init__()
         # initialising
         self.option_image = image1
         self.position = position
@@ -13,24 +11,20 @@ class OptionPress(pygame.sprite.Sprite):
 
         self.button_rect = self.option_image.get_rect(topleft = self.position)
         self.pressed = False
-        self.count = 0
-
 
     def MousePress(self):
         pos = pygame.mouse.get_pos()
         option_hover_sound = pygame.mixer.Sound("../Audio/option_hover_music.mp3") # terraria
-        # if there is a mouse collision
-        if self.button_rect.collidepoint(pos):  # change pos variable name bcz misleading
+        # if hovering mouse over option, play sound and change image to yellow text image
+        if self.button_rect.collidepoint(pos):
             option_hover_sound.play()
             self.option_image = self.image2
-
-            if pygame.mouse.get_pressed()[0] == 1 and self.pressed == False:
+            # if button clicked, set pressed to true
+            if pygame.mouse.get_pressed()[0] == 1 and not self.pressed:
                 self.pressed = True
 
         else:
             self.option_image = self.image1
-            self.count = 0
-
 
     def draw(self, screen):
         self.MousePress()

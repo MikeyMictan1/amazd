@@ -1,165 +1,200 @@
 import pygame
-from settings import *
-from entity import Entity
-from support import *
-class Enemy(Entity):
-    def __init__(self, monster_name, pos, groups, obstacle_sprites, damage_player):
+from globalfunctions import *
+from math import cos, sqrt
+
+class Enemy(pygame.sprite.Sprite):
+    def __init__(self, enemy_name, pos, groups, wall_sprites, character):
         super().__init__(groups)
+        self.frame_index = 0
+        self.frame_speed = 0.15
+        self.movement_vector = pygame.math.Vector2()
+        self.collision_direction = None
 
         # general setup
-        self.sprite_type = "enemy"
-        self.pos = pos
+        self.position = pos
+        self.character = character
 
         # graphics setup
-        self.import_graphics(monster_name)
-        self.status = "idle"
-        self.image = self.animations[self.status][self.frame_index]
+        self.animations_dict = {"idle":[], "moving":[], "attacking":[]}
+        self.animations_dict = import_graphics_dict(enemy_name, self.animations_dict, "../Graphics/enemy")
+
+        self.animation_state = "idle"
+        self.image = self.animations_dict[self.animation_state][self.frame_index]
         self.image = pygame.transform.scale(self.image, (50,64))
 
         # movement
-        self.rect = self.image.get_rect(topleft = self.pos)
-        self.hitbox = self.rect.inflate(0, -10)
-        self.obstacle_sprites = obstacle_sprites
+        self.rect = self.image.get_rect(topleft = self.position)
+        self.wall_sprites = wall_sprites
+
+        # player-enemy interactions
+        self.can_be_damaged = True
+        self.hit_time = None
+        self.max_damage_time = 400
+        self.attack_state = True
+        self.time_of_attack = None
+        self.attack_cooldown = 550
 
         # stats
-        self.monster_name = monster_name
-        monster_info = monster_data[self.monster_name]
-        self.health = monster_info["health"]
-        self.speed = monster_info["speed"]
-        self.attack_damage = monster_info["damage"]
-        self.resistance = monster_info["resistance"]
-        self.attack_radius = monster_info["attack_radius"]
-        self.notice_radius = monster_info["notice_radius"]
+        self.enemy_name = enemy_name
+        self.knockback = 3
+        self.enemy_damage = 100
 
-        # player interaction
-        self.can_attack = True
-        self.attack_time = None
-        self.attack_cooldown = 400
-        self.damage_player = damage_player
-
-        # undamageable frames
-        self.can_damage = True  # vulnerable
-        self.hit_time = None
-        self.invincibility_duration = 300
-
-
-
-    def import_graphics(self, name):
-        self.animations = {"idle":[], "moving":[], "attacking":[]}
-        main_path = f"../Graphics/enemy/{name}/"
-        for animation_type in self.animations.keys():  # for idle in dictionary: (loops through and imports everything)
-            # import folder from support file
-            self.animations[animation_type] = import_folder(main_path + animation_type)
-
-    def get_player_distance_direction(self, player):
-        enemy_dir = pygame.math.Vector2(self.rect.center)
-        player_dir = pygame.math.Vector2(player.rect.center)
-
-        distance = (player_dir - enemy_dir).magnitude()
-
-        if distance > 0:
-            direction = (player_dir - enemy_dir).normalize()
+        if self.enemy_name == "slime":
+            self.health = 400
+            self.speed = 7
+            self.distance_to_attack = 200
+            self.distance_to_notice = 760
 
         else:
-            direction = pygame.math.Vector2()
+            self.health = 100
+            self.speed = 3
+            self.distance_to_attack = 50
+            self.distance_to_notice = 360
 
-        return (distance, direction)
+    def character_hit(self):  # player gets hit
+        if self.character.can_be_damaged:
+            self.character.health -= self.enemy_damage
+            damage_music = pygame.mixer.Sound("../Audio/health_hit.mp3")
+            damage_music.play()
+            damage_music.set_volume(0.5)
+            self.character.can_be_damaged = False
+            self.character.time_damaged = pygame.time.get_ticks()
 
+    def enemy_character_distance_vector(self, character):
+        character_coordinate = pygame.math.Vector2(character.rect.center)
+        enemy_coordinate = pygame.math.Vector2(self.rect.center)
 
-    def get_status(self, player):
-        distance = self.get_player_distance_direction(player)[0]
+        x_squared_distance = (character_coordinate[0] - enemy_coordinate[0]) ** 2
+        y_squared_distance = (character_coordinate[1] - enemy_coordinate[1]) ** 2
 
-        if distance <= self.attack_radius and self.can_attack:
-            if self.status != "attacking":
+        enemy_character_distance = sqrt(x_squared_distance + y_squared_distance)
+        enemy_character_vector = character_coordinate - enemy_coordinate
+
+        return (enemy_character_distance, enemy_character_vector)
+
+    def enemy_hit(self, character): # enemy gets hit
+        enemy_character_info = self.enemy_character_distance_vector(character)
+        enemy_player_vector = enemy_character_info[1]
+
+        if self.can_be_damaged:  # if enemy can be damaged
+            self.movement_vector = enemy_player_vector  # getting enemy direction and moving them in a different direction
+            self.health -= character.damage_enemy()
+            self.hit_time = pygame.time.get_ticks()
+            self.can_be_damaged = False
+
+    def enemy_character_state(self, player):
+        enemy_character_info = self.enemy_character_distance_vector(player)
+        enemy_character_distance = enemy_character_info[0]
+        enemy_character_vector = enemy_character_info[1]
+
+        if enemy_character_distance <= self.distance_to_attack and self.attack_state:
+            if self.animation_state != "attacking":
                 self.frame_index = 0
-            self.status  = "attacking"
+            self.animation_state = "attacking"
+            self.time_of_attack = pygame.time.get_ticks()
+            self.character_hit()
 
-        elif distance <= self.notice_radius:
-            self.status = "moving"
-
-        else:
-            self.status = "idle"
-
-    def actions(self, player):
-        if self.status == "attacking":
-            self.attack_time = pygame.time.get_ticks()
-            self.damage_player(self.attack_damage)
-
-
-        elif self.status == "moving":
-            self.direction = self.get_player_distance_direction(player)[1]
+        elif enemy_character_distance <= self.distance_to_notice:
+            self.animation_state = "moving"
+            self.movement_vector = enemy_character_vector
 
         else:
-            # once the enemy is no longer in range, their direction goes back to 0
-            self.direction = pygame.math.Vector2()
+            self.animation_state = "idle"
+            self.movement_vector = pygame.math.Vector2()
 
+    def animation(self):
+        self.frame_index += self.frame_speed
 
-    def animate(self):
-        animation = self.animations[self.status]
-        self.frame_index += self.animation_speed
-        if self.frame_index >= len(animation):
-            if self.status == "attacking":
-                self.can_attack = False
+        # animating player
+        if self.animation_state == "idle":
+            if self.frame_index >= len(self.animations_dict["idle"]):
+                self.frame_index = 0
+            self.image = self.animations_dict["idle"][int(self.frame_index)]
 
-            self.frame_index = 0
+        if self.animation_state == "moving":
+            if self.frame_index >= len(self.animations_dict["moving"]):
+                self.frame_index = 0
+            self.image = self.animations_dict["moving"][int(self.frame_index)]
 
-        self.image = animation[int(self.frame_index)]
-        if self.monster_name == "slime":
+        if self.animation_state == "attacking":
+            if self.frame_index >= len(self.animations_dict["attacking"]):
+                self.frame_index = 0
+                self.attack_state = False
+            self.image = self.animations_dict["attacking"][int(self.frame_index)]
+
+        # changing size depending on the enemy
+        if self.enemy_name == "slime":
             self.image = pygame.transform.scale(self.image, (300, 300))
 
         else:
             self.image = pygame.transform.scale(self.image, (50, 64))
-        self.rect = self.image.get_rect(center = self.hitbox.center)
 
-        if not self.can_damage:
-            alpha = self.wave_value()
-            self.image.set_alpha(alpha)
+        self.rect = self.image.get_rect(center = self.rect.center)
+
+        # enemy flickers on hit
+        flicker = cos(0.1 * pygame.time.get_ticks())
+        if not self.can_be_damaged and flicker < 0:
+            self.image.set_alpha(255)
+
+        elif not self.can_be_damaged:
+            self.image.set_alpha(50)
 
         else:
             self.image.set_alpha(255)
 
-    def cooldowns(self):
-        current_time = pygame.time.get_ticks()
-        if not self.can_attack:
-            if current_time - self.attack_time >= self.attack_cooldown:
-                self.can_attack = True
+    def damage_cooldown(self):
+        game_loop_time = pygame.time.get_ticks()
 
-        if not self.can_damage:
-            if current_time - self.hit_time >= self.invincibility_duration:
-                self.can_damage = True
+        if not self.attack_state and (game_loop_time - self.time_of_attack) >= self.attack_cooldown:
+            self.attack_state = True
 
-    def get_damage(self, player, attack_type):
-        if self.can_damage:  # if enemy is vulnerable
-            self.direction = self.get_player_distance_direction(player)[1]  # getting enemy direction and moving them in a different direction
-            if attack_type == "weapon":
-                self.health -= player.get_full_weapon_damage()
-            else:  # for other damage types
-                pass
+        if not self.can_be_damaged:
+            self.movement_vector *= -self.knockback  # enemy knockback
+            if game_loop_time - self.hit_time >= self.max_damage_time:
+                self.can_be_damaged = True
 
-            self.hit_time = pygame.time.get_ticks()
-            self.can_damage = False
-
-    def check_death(self):
+    def check_enemy_death(self):
         if self.health <= 0:
+            enemy_death_sound = pygame.mixer.Sound("../Audio/enemy_death_sound.mp3")
+            enemy_death_sound.play()
+            enemy_death_sound.set_volume(0.2)
             self.kill()
 
-    def hit_reaction(self):
-        if not self.can_damage:
-            self.direction *= -self.resistance
+    def enemy_movement(self):
+        if self.movement_vector.magnitude():  # if vector has length
+            self.movement_vector = self.movement_vector.normalize()  # set length of vector to 1 no matter what direction
+
+        self.rect.x += self.movement_vector.x * self.speed
+        self.collision_direction = "x"
+        self.wall_collisions_check()
+        self.rect.y += self.movement_vector.y * self.speed
+        self.collision_direction = "y"
+        self.wall_collisions_check()
+
+    def wall_collisions_check(self):
+        if self.collision_direction == "x":
+            for sprite in self.wall_sprites:
+                if sprite.rect.colliderect(self.rect):
+                    if self.movement_vector.x > 0:  # moving right
+                        self.rect.right = sprite.rect.left
+
+                    if self.movement_vector.x < 0:  # moving left
+                        self.rect.left = sprite.rect.right
+
+        if self.collision_direction == "y":
+            for sprite in self.wall_sprites:
+                if sprite.rect.colliderect(self.rect):
+                    if self.movement_vector.y > 0:  # moving down
+                        self.rect.bottom = sprite.rect.top
+
+                    if self.movement_vector.y < 0:  # moving up
+                        self.rect.top = sprite.rect.bottom
 
     def update(self):
-        self.hit_reaction()
-        self.move(self.speed)
-        self.animate()
-        self.cooldowns()
-        self.check_death()
-
-
-    def enemy_update(self, player):
-        self.get_status(player)
-        self.actions(player)
-
-
+        self.damage_cooldown()
+        self.enemy_movement()
+        self.animation()
+        self.check_enemy_death()
 
 
 
