@@ -6,7 +6,7 @@ from customlevels import tutorial, boss_arena
 from gamechange import GameWin, GameOver
 from main_menu import MainMenu
 from ingamemenus import InGameMenu, ControlsMenu
-from tutorial import TutorialClass
+from tutorial import TutorialLevel
 
 # ----------------------------------------
 class Amazd:
@@ -22,8 +22,8 @@ class Amazd:
         # --- LEVEL INITIALISATION ---
         self.tutorial_maze = DepthFirstMaze(13, 13)
         self.tutorial_maze_list = self.tutorial_maze.create_maze()
-        self.tutorial_maze = TutorialClass(self.tutorial_maze_list)
-        self.tutorial = TutorialClass(tutorial)
+        self.tutorial_maze = TutorialLevel(self.tutorial_maze_list)
+        self.tutorial = TutorialLevel(tutorial)
         self.boss_level = MazeLevel(boss_arena)
         self.create_levels()
 
@@ -55,6 +55,7 @@ class Amazd:
 
             # --- CHECKS IF IN MAIN MENU ---
             if self.main_menu.in_menu:
+                self.first_run = True
                 self.main_menu.menu()
 
             # --- CHECKS IF IN GAME MENU ---
@@ -69,19 +70,20 @@ class Amazd:
             self.clock.tick(FPS)
 
     def reset_levels(self):
-        self.reset_menus()
         self.main_menu.game_on = False
         self.boss_level = MazeLevel(boss_arena)
         self.create_levels()
+        self.reset_menus()
 
     def reset_tutorial(self):
-        self.reset_menus()
         self.main_menu.tutorial_on = False
-        self.tutorial_maze = TutorialClass(self.tutorial_maze_list)
-        self.tutorial = TutorialClass(tutorial)
+        self.tutorial_maze = TutorialLevel(self.tutorial_maze_list)
+        self.tutorial = TutorialLevel(tutorial)
+        self.reset_menus()
 
     def reset_menus(self):
         self.main_menu.in_menu = True
+        self.first_run = True
         self.in_game_menu.escape_counter = 0
         self.controls_menu.escape_counter = 0
 
@@ -109,7 +111,7 @@ class Amazd:
             self.tutorial_maze.tutorial_two_hud()  # hud
             self.main_menu.tutorial_on = False  # closes first tutorial
 
-        if not self.tutorial.is_active and not self.tutorial_maze.is_active:  # when you reach the end of the tutorial maze
+        if not self.tutorial_maze.is_active:  # when you reach the end of the tutorial maze
             self.reset_tutorial()
 
     def run_tutorial(self, tutorial_type):
@@ -137,7 +139,6 @@ class Amazd:
             self.main_menu.game_on = False
             current_level.run_level()
             self.check_game_over(current_level)
-
             if self.first_run:  # if this is the first loop of this function for the current level, then carryover player data
                 current_level.character_level_carryover(previous_level.character.points, previous_level.character.health,
                                                      previous_level.character.level_number)
