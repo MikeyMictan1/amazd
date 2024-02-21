@@ -35,10 +35,7 @@ class Character(pygame.sprite.Sprite):
         self.character_height = 160
 
         # player animation state
-        self.right = True
-        self.left = False
-        self.up = False
-        self.down = False
+
         self.sprinting = False
         self.frame = 0
         self.attacking_frame = 0
@@ -57,7 +54,6 @@ class Character(pygame.sprite.Sprite):
         self.time_of_attack = None
 
         # TUTORIAL CODE ---
-
         self.character_damage = 25
 
 
