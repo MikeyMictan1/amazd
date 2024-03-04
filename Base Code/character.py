@@ -1,9 +1,8 @@
-import pygame, os, sys
+import pygame
 from globalfunctions import screen_width, screen_height, import_graphics_dict
 import numpy
 from math import cos
 from sword import Sword
-from camera import GameCamera
 
 class Character(pygame.sprite.Sprite):
     def __init__(self, pos, groups, wall_sprites, powerup_sprites, coin_sprites,health_pot_sprites,exit_sprites, sword_sprites):
@@ -50,7 +49,7 @@ class Character(pygame.sprite.Sprite):
 
         # attacks
         # TUTORIAL CODE ---
-        self.attack_state = False
+        self.is_attacking = False
         self.time_of_attack = None
 
         # TUTORIAL CODE ---
@@ -99,14 +98,12 @@ class Character(pygame.sprite.Sprite):
         self.controls_instructions = pygame.transform.scale(self.controls_instructions, (50,50))
         self.controls_instructions_txt = self.controls_font.render("Controls",1,self.white)
 
-
-    def stop_attacks(self):
-        if self.current_attack:
-            self.current_attack.kill()
-
     def cause_attacks(self):
+        self.is_attacking = True
+        self.time_of_attack = pygame.time.get_ticks()
         self.positions = [self.rect.midright, self.rect.midleft, self.rect.midbottom, self.rect.midtop]
-        self.current_attack = Sword(self.character_direction, self.positions, [self.game_camera, self.sword_sprites])
+        self.sword = Sword(self.character_direction, self.positions, [self.game_camera, self.sword_sprites])
+        self.attacking_frame = 0
 
 
     def character_input(self):
@@ -135,12 +132,9 @@ class Character(pygame.sprite.Sprite):
             self.movement_vector.x = 0
 
         # ATTACK INPUT
-        if not self.attack_state:
+        if not self.is_attacking:
             if key_press[pygame.K_SPACE]:
-                self.attack_state = True
-                self.time_of_attack = pygame.time.get_ticks()
                 self.cause_attacks()
-                self.attacking_frame = 0
 
         # sprint
         if key_press[pygame.K_LSHIFT] and self.stamina > 120 and (self.movement_vector.x != 0 or self.movement_vector.y != 0) and self.speed <= 10:  # if sprinting, and we have enough stamina
@@ -176,7 +170,7 @@ class Character(pygame.sprite.Sprite):
             self.speed = 15
 
 
-    def player_movement(self):
+    def character_movement(self):
         # TUTORIAL CODE ---
         if self.movement_vector.magnitude() != 0:  # if vector has length
             self.movement_vector = self.movement_vector.normalize()  # set length of vector to 1 no matter what direction
@@ -202,9 +196,9 @@ class Character(pygame.sprite.Sprite):
 
     def damage_cooldown(self):
         game_loop_time = pygame.time.get_ticks()
-        if self.attack_state and round(self.attacking_frame, 1) == 3.9:
-            self.stop_attacks()
-            self.attack_state = False
+        if self.is_attacking and round(self.attacking_frame, 1) == 3.9:
+            self.sword.kill()
+            self.is_attacking = False
 
         if not self.can_be_damaged and game_loop_time - self.time_damaged >= self.max_damage_time:
                 self.can_be_damaged = True
@@ -287,7 +281,7 @@ class Character(pygame.sprite.Sprite):
 
     def powerup_timer(self):
         # fonts and colours
-        if self.powerup_active != 0:
+        if self.powerup_active:
             # powerup graphic
             self.powerup_timer_image = pygame.transform.scale(self.powerup_timer_image, (100, 100))
             self.display_surface.blit(self.powerup_timer_image, (screen_width // 15, screen_height // 1.2))
@@ -308,11 +302,11 @@ class Character(pygame.sprite.Sprite):
             self.attacking_frame = 0
 
         # check for powerup
-        if self.speed >= 15:
+        if self.powerup_active:
             self.frame_speed = 0.5
 
         # check for sprint
-        elif self.key_press[pygame.K_LSHIFT] and self.stamina > 120 and (self.movement_vector.x != 0 or self.movement_vector.y != 0):
+        elif self.sprinting:
             self.frame_speed = 0.2
 
         # walking speed
@@ -322,30 +316,17 @@ class Character(pygame.sprite.Sprite):
 
     def animation(self):
         self.key_press = pygame.key.get_pressed()
-        # attacking
-        if self.attack_state:
-            if self.character_direction == "left":
-                self.state = f"attack_right"  # as "left" needs to be "right" first, then transformed
-            else:
-                self.state = f"attack_{self.character_direction}"
-            self.image = self.animation_dict[self.state][int(self.attacking_frame)]
+        # --- ATTACKING ANIMATION ---
+        if self.is_attacking:
+            self.image = self.animation_dict[self.get_animation_state("attack")][int(self.attacking_frame)]
 
-        # moving
+        # --- MOVING ANIMATION ---
         elif self.key_press[pygame.K_s] or self.key_press[pygame.K_d] or self.key_press[pygame.K_a] or self.key_press[pygame.K_w]:
-            if self.character_direction == "left":
-                self.state = f"moving_right"
-            else:
-                self.state = f"moving_{self.character_direction}"
-            self.image = self.animation_dict[self.state][int(self.frame)]
+            self.image = self.animation_dict[self.get_animation_state("moving")][int(self.frame)]
 
-        # idle
+        # --- IDLE ANIMATION ---
         else:
-            if self.character_direction == "left":
-                self.state = f"idle_right"
-
-            else:
-                self.state = f"idle_{self.character_direction}"
-            self.image = self.animation_dict[self.state][int(self.frame)]
+            self.image = self.animation_dict[self.get_animation_state("idle")][int(self.frame)]
 
 
         # making the image
@@ -356,15 +337,19 @@ class Character(pygame.sprite.Sprite):
 
         # player flicker on hit
         flicker = cos(0.1 * pygame.time.get_ticks())
-        if not self.can_be_damaged and flicker < 0:
-            self.image.set_alpha(255)
-
-        elif not self.can_be_damaged:
+        if not self.can_be_damaged and flicker > 0:
             self.image.set_alpha(50)
 
         else:
             self.image.set_alpha(255)
 
+    def get_animation_state(self, state):
+        if self.character_direction == "left":
+            animation_type = f"{state}_right"
+        else:
+            animation_type = f"{state}_{self.character_direction}"
+
+        return animation_type
 
     def points_timer(self):
         self.points -= (1/60)
@@ -419,7 +404,7 @@ class Character(pygame.sprite.Sprite):
         self.damage_cooldown()
         self.animation()
         self.frame_updates()
-        self.player_movement()
+        self.character_movement()
         self.powerup_timer()
         self.points_timer()
         self.heads_up_display()

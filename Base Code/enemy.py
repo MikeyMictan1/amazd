@@ -82,8 +82,8 @@ class Enemy(pygame.sprite.Sprite):
             self.hit_time = pygame.time.get_ticks()
             self.can_be_damaged = False
 
-    def enemy_character_state(self, player):
-        enemy_character_info = self.enemy_character_distance_vector(player)
+    def enemy_character_state(self, character):
+        enemy_character_info = self.enemy_character_distance_vector(character)
         enemy_character_distance = enemy_character_info[0]
         enemy_character_vector = enemy_character_info[1]
 
@@ -133,10 +133,7 @@ class Enemy(pygame.sprite.Sprite):
 
         # enemy flickers on hit
         flicker = cos(0.1 * pygame.time.get_ticks())
-        if not self.can_be_damaged and flicker < 0:
-            self.image.set_alpha(255)
-
-        elif not self.can_be_damaged:
+        if not self.can_be_damaged and flicker > 0:
             self.image.set_alpha(50)
 
         else:
@@ -195,7 +192,6 @@ class Enemy(pygame.sprite.Sprite):
         self.enemy_movement()
         self.animation()
         self.check_enemy_death()
-
 
 
 

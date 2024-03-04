@@ -1,4 +1,3 @@
-import pygame
 from globalfunctions import *
 
 class OptionPress:
@@ -13,10 +12,10 @@ class OptionPress:
         self.pressed = False
 
     def MousePress(self):
-        pos = pygame.mouse.get_pos()
+        mouse_rect = pygame.mouse.get_pos()
         option_hover_sound = pygame.mixer.Sound("../Audio/option_hover_music.mp3") # terraria
         # if hovering mouse over option, play sound and change image to yellow text image
-        if self.button_rect.collidepoint(pos):
+        if self.button_rect.collidepoint(mouse_rect):
             option_hover_sound.play()
             self.option_image = self.image2
             # if button clicked, set pressed to true
@@ -29,3 +28,5 @@ class OptionPress:
     def draw(self, screen):
         self.MousePress()
         screen.blit(self.option_image, self.position)
+
+

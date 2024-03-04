@@ -3,6 +3,7 @@ tutorial = ["XYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYXX",
             "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"]
 
 # ! used as blank space (can be any char that doesn't already represent a tile)
+
 boss_arena = ["!!!!!!XXYYYYYYYYYYYYYYYYYYYXX",
               "!!!!!!XXC        C        UXX",
               "XXYYYYYY                   XX",

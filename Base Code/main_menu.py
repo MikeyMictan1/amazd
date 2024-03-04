@@ -1,5 +1,4 @@
-import pygame, sys, os
-from globalfunctions import *
+import sys
 from buttons import *
 
 class MainMenu:

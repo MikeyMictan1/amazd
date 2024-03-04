@@ -3,9 +3,7 @@ from mazelayout import *
 from globalfunctions import *
 from character import Character
 from collidables import Powerups, Coins, HealthPot, Exit
-from sword import Sword
 from enemy import Enemy
-from gamechange import GameOver
 from camera import GameCamera
 
 class MazeLevel:
@@ -24,12 +22,10 @@ class MazeLevel:
         self.create_pygame_maze(maze_list)
 
         # other setup
-        self.current_attack = None
         self.is_active = True
         self.level_type = "normal"
 
-
-    def maze_loop(self, maze_lst, cell_check):
+    def maze_loop(self, maze_lst, check_maze_cell):
         row_num = -1
         for row in maze_lst:
             row_num += 1
@@ -38,7 +34,7 @@ class MazeLevel:
             for cell in row:
                 col_num += 1
                 position = (col_num * tile_size, row_num * tile_size)
-                cell_check(cell, position)
+                check_maze_cell(cell, position)
 
     def check_maze_layout(self, cell, position):
         if cell == "X":  # if there are walls
