@@ -49,7 +49,7 @@ class MainMenu:
 
     def game_option_pressed(self):
         self.menu_music.stop()
-        self.maze_music.play()
+        self.maze_music.play(999)
         self.maze_music.set_volume(0.05)
         self.in_menu = False
 
