@@ -17,7 +17,7 @@ class Amazd:
         pygame.display.set_caption("Amaz'd")
         self.clock = pygame.time.Clock()
         self.first_run = True
-        self.num_of_levels = 7
+        self.num_of_levels = number_of_levels
 
         # --- LEVEL INITIALISATION ---
         self.tutorial_maze = DepthFirstMaze(13, 13)

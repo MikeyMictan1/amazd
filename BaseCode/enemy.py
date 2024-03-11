@@ -42,7 +42,7 @@ class Enemy(pygame.sprite.Sprite):
         if self.enemy_name == "slime":
             self.health = 400
             self.speed = 7
-            self.distance_to_attack = 200
+            self.distance_to_attack = 130
             self.distance_to_notice = 760
 
         else:

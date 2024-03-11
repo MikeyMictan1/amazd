@@ -17,6 +17,7 @@ tutorial_font = pygame.font.Font("../Fonts/Pixel.ttf", 20)
 
 # colours
 white = (255, 255, 255)
+number_of_levels = 7
 
 def img_centre(image):
     width = screen_width // 2 - image.get_width() // 2

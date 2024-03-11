@@ -1,5 +1,5 @@
 import pygame
-from globalfunctions import screen_width, screen_height, import_graphics_dict
+from globalfunctions import screen_width, screen_height, import_graphics_dict, number_of_levels
 import numpy
 from math import cos
 from sword import Sword
@@ -380,7 +380,7 @@ class Character(pygame.sprite.Sprite):
 
         # stuff to put on the hud if not in tutorial
         if not self.tutorial_mode:
-            self.level_number_text = self.controls_font.render(f"Level {self.level_number}/8", 1, self.white)
+            self.level_number_text = self.controls_font.render(f"Level {self.level_number}/{number_of_levels+1}", 1, self.white)
             self.display_surface.blit(self.level_number_text,
                                   (screen_width // 2 - self.level_number_text.get_width() // 2, screen_height // 10))
 

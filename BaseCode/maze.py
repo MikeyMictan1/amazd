@@ -97,7 +97,7 @@ class DepthFirstMaze:
                 enemy_chance = random.randint(0, 20)
                 coin_chance = random.randint(0, 20)
                 exit_chance = random.randint(0, 10)
-                health_pot_chance = random.randint(0, 200)
+                health_pot_chance = random.randint(0, 100)
 
                 self.col_num += 1
 
@@ -140,6 +140,5 @@ class DepthFirstMaze:
         self.generate_blank_maze()
         self.create_recursive_maze(self.visited_cells_stack)
         return self.add_elements_to_maze()
-
 
 

@@ -7,7 +7,7 @@ class GameCamera(pygame.sprite.Group):
         super().__init__()
         self.screen = pygame.display.get_surface()
         self.character_movement_offset = pygame.math.Vector2()
-        self.character_image_offset = (-75, -40)
+        self.character_image_offset = (-75, -50)
 
     def draw_camera_offset(self, character):
         # getting the offset
