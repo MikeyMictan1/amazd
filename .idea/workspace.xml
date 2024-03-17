@@ -4,15 +4,169 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="887a5ba4-2fb2-473d-8dc0-1fde4c81a3d9" name="Changes" comment="tweaked in game music">
-      <change afterPath="$PROJECT_DIR$/BaseCode/maze_tests.py" afterDir="false" />
+    <list default="true" id="887a5ba4-2fb2-473d-8dc0-1fde4c81a3d9" name="Changes" comment="added tests">
+      <change afterPath="$PROJECT_DIR$/Graphics/icon/amazd_icon.ico" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Audio/enter_maze_music.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Audio/menu_music.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Audio/open_maze_menu2.mp3" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/BaseCode/amazd.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/amazd.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BaseCode/buttons.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/buttons.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BaseCode/camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/camera.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BaseCode/character.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/character.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BaseCode/collidables.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/collidables.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BaseCode/enemy.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/enemy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BaseCode/globalfunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/globalfunctions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BaseCode/maze.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/maze.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BaseCode/gamechange.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/gamechange.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BaseCode/ingamemenus.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/ingamemenus.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BaseCode/maze_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/maze_tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/attack_down/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/attack_down/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/attack_down/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/attack_down/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/attack_left/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/attack_left/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/attack_left/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/attack_left/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/attack_right/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/attack_right/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/attack_right/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/attack_right/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle/5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle_down/idledown1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle_down/idledown2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle_down/idledown3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle_down/idledown4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle_down/idledown5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle_down/idledown6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle_right/idleright1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle_right/idleright2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle_right/idleright3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle_right/idleright4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle_right/idleright5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle_right/idleright6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle_up/idleup1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle_up/idleup2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle_up/idleup3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle_up/idleup4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle_up/idleup5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/idle_up/idleup6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/moving_down/movingdown1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/moving_down/movingdown2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/moving_down/movingdown3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/moving_down/movingdown4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/moving_down/movingdown5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/moving_down/movingdown6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/moving_right/movingright1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/moving_right/movingright2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/moving_right/movingright3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/moving_right/movingright4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/moving_right/movingright5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/moving_right/movingright6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/moving_up/movingup1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/moving_up/movingup2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/moving_up/movingup3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/moving_up/movingup4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/moving_up/movingup5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/OLD_CHARACTER_ANIMATIONS/moving_up/movingup6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/chiseled_stone_bricks.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/coal_ore.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/comparator.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/comparator_on.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/copper_ore.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/deepslate_diamond_ore.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/deepslate_gold_ore.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/deepslate_iron_ore.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/deepslate_lapis_ore.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/deepslate_redstone_ore.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/diamond_ore.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/emerald_ore.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/gold_ore.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/iron_ore.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/lapis_ore.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/mossy_stone_bricks.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/redstone_ore.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/repeater.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/repeater_on.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/smooth_stone.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/smooth_stone_slab_side.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/block/stone_bricks.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/mystic_woods_free_2.1.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/non-used weapon/down_placeholder.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/non-used weapon/full.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/non-used weapon/left_placeholder.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/non-used weapon/right_placeholder.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/non-used weapon/up_placeholder.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/speedpowerup3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/characters/skeleton.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/characters/slime.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/objects/chest_01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/objects/chest_02.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/objects/objects.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/objects/rock_in_water_01-sheet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/objects/rock_in_water_01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/objects/rock_in_water_02.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/objects/rock_in_water_03.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/objects/rock_in_water_04.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/objects/rock_in_water_05.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/objects/rock_in_water_06.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/particles/dust_particles_01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/tilesets/decor_16x16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/tilesets/decor_8x8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/tilesets/fences.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/tilesets/floors/carpet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/tilesets/floors/flooring.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/tilesets/floors/wooden.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/tilesets/grass.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/tilesets/plains.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/tilesets/walls/walls.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/tilesets/walls/wooden_door.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/tilesets/walls/wooden_door_b.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/tilesets/water1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/tilesets/water2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/tilesets/water3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/tilesets/water4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/tilesets/water5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/tilesets/water6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/tilesets/water_decorations.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/sprites/tilesets/water_lillies.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stamina-old/stamina0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stamina-old/stamina1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stamina-old/stamina10.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stamina-old/stamina11.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stamina-old/stamina12.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stamina-old/stamina13.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stamina-old/stamina14.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stamina-old/stamina15.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stamina-old/stamina2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stamina-old/stamina3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stamina-old/stamina4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stamina-old/stamina5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stamina-old/stamina6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stamina-old/stamina7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stamina-old/stamina8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stamina-old/stamina9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stonebrick/stone_brick1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stonebrick/stone_brick10.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stonebrick/stone_brick2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stonebrick/stone_brick3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stonebrick/stone_brick4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stonebrick/stone_brick5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stonebrick/stone_brick6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stonebrick/stone_brick7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stonebrick/stone_brick8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/OLD/stonebrick/stone_brick9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/PLAYER SPRITE INFO.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/cobblestone.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/link.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/mystic_woods_2.1.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/player.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/skeleton.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/NON-USED/slime.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/amazd_icon.ico" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,23 +198,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/Michael/PycharmProjects/amazd-the-final",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Michael/PycharmProjects/amazd-the-final&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="Python tests.Python tests in maze_tests.py">
+}</component>
+  <component name="RunManager" selected="Python.amazd (1)">
     <configuration name="amazd (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="amazd" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -75,28 +229,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/BaseCode/amazd.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="hash table (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="amazd" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="M:/School/YEAR 13/comp sci/dales" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="M:/School/YEAR 13/comp sci/dales/hash table (1).py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -142,6 +274,21 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
+    <configuration name="Python tests for maze_tests.testing_maze_walls" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="amazd" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/BaseCode" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;maze_tests.testing_maze_walls&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <configuration name="Python tests in maze_tests.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="amazd" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -159,11 +306,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.amazd (1)" />
         <item itemvalue="Python tests.Python tests in maze_tests.py" />
+        <item itemvalue="Python tests.Python tests for maze_tests.testing_maze_walls" />
         <item itemvalue="Python.maze" />
         <item itemvalue="Python tests.Python tests for maze_tests.testing_maze_dimensions" />
-        <item itemvalue="Python.hash table (1)" />
-        <item itemvalue="Python.amazd (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -188,7 +335,14 @@
       <workItem from="1709988805556" duration="1087000" />
       <workItem from="1709993407541" duration="2825000" />
       <workItem from="1709996508636" duration="1317000" />
-      <workItem from="1710185017597" duration="6799000" />
+      <workItem from="1710185017597" duration="7511000" />
+      <workItem from="1710341734559" duration="5804000" />
+      <workItem from="1710532173336" duration="696000" />
+      <workItem from="1710592359949" duration="2726000" />
+      <workItem from="1710612558490" duration="1087000" />
+      <workItem from="1710625919900" duration="801000" />
+      <workItem from="1710675448054" duration="3379000" />
+      <workItem from="1710704063507" duration="2599000" />
     </task>
     <task id="LOCAL-00001" summary="Main py changed to amazd">
       <option name="closed" value="true" />
@@ -278,7 +432,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709852466136</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="added tests">
+      <option name="closed" value="true" />
+      <created>1710195963860</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1710195963860</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -305,16 +467,17 @@
     <MESSAGE value="added exe for amazd, tweaked some other stuff" />
     <MESSAGE value="8 level and 3 level exe file added" />
     <MESSAGE value="tweaked in game music" />
-    <option name="LAST_COMMIT_MESSAGE" value="tweaked in game music" />
+    <MESSAGE value="added tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="added tests" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/amazd_the_final$amazd__1_.coverage" NAME="amazd (1) Coverage Results" MODIFIED="1709765335550" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BaseCode" />
     <SUITE FILE_PATH="coverage/amazd_the_final$main.coverage" NAME="main Coverage Results" MODIFIED="1708299009241" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Base Code" />
-    <SUITE FILE_PATH="coverage/amazd_py$.coverage" NAME=" Coverage Results" MODIFIED="1710194838521" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BaseCode" />
+    <SUITE FILE_PATH="coverage/amazd_py$.coverage" NAME=" Coverage Results" MODIFIED="1710347313889" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BaseCode" />
     <SUITE FILE_PATH="coverage/amazd_py$maze.coverage" NAME="maze Coverage Results" MODIFIED="1710194806516" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BaseCode" />
     <SUITE FILE_PATH="coverage/amazd_py$hash_table__1_.coverage" NAME="hash table (1) Coverage Results" MODIFIED="1710186056849" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="M:/School/YEAR 13/comp sci/dales" />
     <SUITE FILE_PATH="coverage/amazd_the_final$mazelevel.coverage" NAME="mazelevel Coverage Results" MODIFIED="1708371275790" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Base Code" />
     <SUITE FILE_PATH="coverage/amazd_the_final$amazd.coverage" NAME="amazd Coverage Results" MODIFIED="1709762814042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Base Code" />
-    <SUITE FILE_PATH="coverage/amazd_py$amazd__1_.coverage" NAME="amazd (1) Coverage Results" MODIFIED="1709997230184" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BaseCode" />
+    <SUITE FILE_PATH="coverage/amazd_py$amazd__1_.coverage" NAME="amazd (1) Coverage Results" MODIFIED="1710706915202" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BaseCode" />
   </component>
 </project>

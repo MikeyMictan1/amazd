@@ -1,5 +1,5 @@
 import pygame
-from globalfunctions import screen_width, screen_height, import_graphics_dict, number_of_levels
+from globalfunctions import *
 import numpy
 from math import cos
 from sword import Sword
@@ -8,62 +8,60 @@ class Character(pygame.sprite.Sprite):
     def __init__(self, pos, groups, wall_sprites, powerup_sprites, coin_sprites,health_pot_sprites,exit_sprites, sword_sprites):
         super().__init__(groups)
         # general setup
-        self.key_press = pygame.key.get_pressed()
+        self.__key_press = pygame.key.get_pressed()
         self.tutorial_mode = False
-        self.level_up = False  # have we reached the end of the level
+        self.__level_up = False  # have we reached the end of the level
         self.level_number = 1
-        self.display_surface = pygame.display.get_surface()
-        self.white = (255, 255, 255)
-        self.font = pygame.font.Font("../Fonts/Pixel.ttf", 100)
-        self.collision_direction = None
+        self.__display_surface = pygame.display.get_surface()
+        self.__collision_direction = None
 
         # obstacles collision
-        self.wall_sprites = wall_sprites
-        self.powerup_sprites = powerup_sprites
-        self.coin_sprites = coin_sprites
-        self.exit_sprites = exit_sprites
-        self.heath_pot_sprites = health_pot_sprites
-        self.sword_sprites = sword_sprites
-        self.game_camera = groups
+        self.__wall_sprites = wall_sprites
+        self.__powerup_sprites = powerup_sprites
+        self.__coin_sprites = coin_sprites
+        self.__exit_sprites = exit_sprites
+        self.__heath_pot_sprites = health_pot_sprites
+        self.__sword_sprites = sword_sprites
+        self.__game_camera = groups
 
         # player setup
-        self.pos = pos
-        self.rect_width = 50
-        self.rect_height = 64
-        self.character_width = 200
-        self.character_height = 160
+        self.__pos = pos
+        self.__rect_width = 50
+        self.__rect_height = 64
+        self.__character_width = 200
+        self.__character_height = 160
 
         # player animation state
 
-        self.sprinting = False
-        self.frame = 0
-        self.attacking_frame = 0
-        self.frame_speed = 0.1
-        self.attacking_frame_speed = 0.1
+        self.__sprinting = False
+        self.__frame = 0
+        self.__attacking_frame = 0
+        self.__frame_speed = 0.1
+        self.__attacking_frame_speed = 0.1
 
         # movement
-        self.speed = 5
-        self.movement_vector = pygame.math.Vector2()
-        self.max_stamina = 1500
-        self.stamina = self.max_stamina
+        self.__speed = 5
+        self.__movement_vector = pygame.math.Vector2()
+        self.__max_stamina = 1500
+        self.__stamina = self.__max_stamina
 
         # attacks
         # TUTORIAL CODE ---
-        self.is_attacking = False
-        self.time_of_attack = None
+        self.__is_attacking = False
+        self.__time_of_attack = None
 
         # TUTORIAL CODE ---
-        self.character_damage = 25
+        self.__character_damage = 25
 
 
         # powerup timer
-        self.powerup_active = 0
-        self.powerup_timer_image = pygame.image.load(
+        self.__powerup_active = 0
+        self.__powerup_timer_image = pygame.image.load(
             f"../Graphics/powerups/speedpowerup1.png").convert_alpha()  # making a standard square surface
 
         # stats
-        self.max_health = 700
-        self.health = self.max_health
+        self.__max_health = 700
+        self.health = self.__max_health
         self.points = 501
         self.in_level = True
 
@@ -73,89 +71,89 @@ class Character(pygame.sprite.Sprite):
         self.max_damage_time = 1000
 
         # stats animation dictionary
-        self.stats_animation_dict = {"health":[], "stamina":[]}
-        self.stats_animation_dict = import_graphics_dict("stats", self.stats_animation_dict,"../Graphics")
+        self.__stats_animation_dict = {"health":[], "stamina":[]}
+        self.__stats_animation_dict = import_graphics_dict("stats", self.__stats_animation_dict, "../Graphics")
 
         # making the character
-        self.animation_dict = {"attack_down": [], "attack_right": [], "attack_up": [],
+        self.__animation_dict = {"attack_down": [], "attack_right": [], "attack_up": [],
                            "idle_down": [], "idle_right": [], "idle_up": [],
                            "moving_down": [], "moving_right": [], "moving_up": []}
 
-        self.animation_dict = import_graphics_dict("character", self.animation_dict, "../Graphics")
-        self.state = "idle_right"  # default states
-        self.character_direction = "down"
-        self.image = self.animation_dict[self.state][self.frame]
-        self.image = pygame.transform.scale(self.image, (self.rect_width, self.rect_height))
+        self.__animation_dict = import_graphics_dict("character", self.__animation_dict, "../Graphics")
+        self.__state = "idle_right"  # default states
+        self.__character_direction = "down"
+        self.image = self.__animation_dict[self.__state][self.__frame]
+        self.image = pygame.transform.scale(self.image, (self.__rect_width, self.__rect_height))
         self.rect = self.image.get_rect(topleft=pos)
-        self.move_count = 0
+        self.__move_count = 0
 
         # walking audio
-        self.walk_sound = pygame.mixer.Sound("../Audio/walk_sound.mp3")
+        self.__walk_sound = pygame.mixer.Sound("../Audio/walk_sound.mp3")
 
         # other hud info
-        self.controls_font = pygame.font.Font("../Fonts/Pixel.ttf", 30)
-        self.controls_instructions = pygame.image.load("../Graphics/controls/controls_instruction.png").convert_alpha()
-        self.controls_instructions = pygame.transform.scale(self.controls_instructions, (50,50))
-        self.controls_instructions_txt = self.controls_font.render("Controls",1,self.white)
+        self.__controls_font = pygame.font.Font("../Fonts/Pixel.ttf", 30)
+        self.__controls_instructions = pygame.image.load("../Graphics/controls/controls_instruction.png").convert_alpha()
+        self.__controls_instructions = pygame.transform.scale(self.__controls_instructions, (50, 50))
+        self.__controls_instructions_txt = self.__controls_font.render("Controls", 1, white)
 
-    def cause_attacks(self):
-        self.is_attacking = True
-        self.time_of_attack = pygame.time.get_ticks()
-        self.positions = [self.rect.midright, self.rect.midleft, self.rect.midbottom, self.rect.midtop]
-        self.sword = Sword(self.character_direction, self.positions, [self.game_camera, self.sword_sprites])
-        self.attacking_frame = 0
+    def __cause_attacks(self):
+        self.__is_attacking = True
+        self.__time_of_attack = pygame.time.get_ticks()
+        self.__positions = [self.rect.midright, self.rect.midleft, self.rect.midbottom, self.rect.midtop]
+        self.__sword = Sword(self.__character_direction, self.__positions, [self.__game_camera, self.__sword_sprites])
+        self.__attacking_frame = 0
 
 
-    def character_input(self):
-        key_press = pygame.key.get_pressed()
+    def __character_input(self):
+        __key_press = pygame.key.get_pressed()
 
         # movement
-        if key_press[pygame.K_w]:
-            self.movement_vector.y = -1
-            self.character_direction = "up"
+        if __key_press[pygame.K_w]:
+            self.__movement_vector.y = -1
+            self.__character_direction = "up"
 
-        elif key_press[pygame.K_s]:
-            self.movement_vector.y = 1
-            self.character_direction = "down"
+        elif __key_press[pygame.K_s]:
+            self.__movement_vector.y = 1
+            self.__character_direction = "down"
         else:
-            self.movement_vector.y = 0
+            self.__movement_vector.y = 0
 
-        if key_press[pygame.K_d]:
-            self.movement_vector.x = 1
-            self.character_direction = "right"
+        if __key_press[pygame.K_d]:
+            self.__movement_vector.x = 1
+            self.__character_direction = "right"
 
-        elif key_press[pygame.K_a]:
-            self.movement_vector.x = -1
-            self.character_direction = "left"
+        elif __key_press[pygame.K_a]:
+            self.__movement_vector.x = -1
+            self.__character_direction = "left"
 
         else:
-            self.movement_vector.x = 0
+            self.__movement_vector.x = 0
 
         # ATTACK INPUT
-        if not self.is_attacking:
-            if key_press[pygame.K_SPACE]:
-                self.cause_attacks()
+        if not self.__is_attacking:
+            if __key_press[pygame.K_SPACE]:
+                self.__cause_attacks()
 
         # sprint
-        if key_press[pygame.K_LSHIFT] and self.stamina > 120 and (self.movement_vector.x != 0 or self.movement_vector.y != 0) and self.speed <= 10:  # if sprinting, and we have enough stamina
-            self.speed = 10
-            self.sprinting = True
-            self.stamina -= 5
-            if self.stamina <= 120:  # cutoff at 120, so that they cant sprint immediately after running out of stamina
-                self.stamina = 0
+        if __key_press[pygame.K_LSHIFT] and self.__stamina > 120 and (self.__movement_vector.x != 0 or self.__movement_vector.y != 0) and self.__speed <= 10:  # if sprinting, and we have enough stamina
+            self.__speed = 10
+            self.__sprinting = True
+            self.__stamina -= 5
+            if self.__stamina <= 120:  # cutoff at 120, so that they cant sprint immediately after running out of stamina
+                self.__stamina = 0
 
         else:
-            self.speed = 5
-            self.sprinting = False
-            if self.stamina < self.max_stamina:
-                self.stamina += 6
+            self.__speed = 5
+            self.__sprinting = False
+            if self.__stamina < self.__max_stamina:
+                self.__stamina += 6
 
         # code here round our value of stamina to the nearest 100, and puts in a format to be blitted to screen
-        if len(str(self.stamina)) == 4:
-            round_number = numpy.format_float_positional(self.stamina, precision=2, unique=False, fractional=False)
+        if len(str(self.__stamina)) == 4:
+            round_number = numpy.format_float_positional(self.__stamina, precision=2, unique=False, fractional=False)
 
         else:
-            round_number = numpy.format_float_positional(self.stamina, precision=1, unique=False, fractional=False)
+            round_number = numpy.format_float_positional(self.__stamina, precision=1, unique=False, fractional=False)
 
         stamina_lst = []
 
@@ -165,78 +163,78 @@ class Character(pygame.sprite.Sprite):
         self.stamina_joined = "".join(stamina_lst)
 
 
-        if self.powerup_active > 0:  # if a powerup is active, -1 for each frame, and give player speed boost
-            self.powerup_active -= 1
-            self.speed = 15
+        if self.__powerup_active > 0:  # if a powerup is active, -1 for each frame, and give player speed boost
+            self.__powerup_active -= 1
+            self.__speed = 15
 
 
-    def character_movement(self):
+    def __character_movement(self):
         # TUTORIAL CODE ---
-        if self.movement_vector.magnitude() != 0:  # if vector has length
-            self.movement_vector = self.movement_vector.normalize()  # set length of vector to 1 no matter what direction
+        if self.__movement_vector.magnitude() != 0:  # if vector has length
+            self.__movement_vector = self.__movement_vector.normalize()  # set length of vector to 1 no matter what direction
 
-        self.rect.x += self.movement_vector.x * self.speed
-        self.collision_direction = "x"
-        self.collisions_check()
-        self.rect.y += self.movement_vector.y * self.speed
-        self.collision_direction = "y"
-        self.collisions_check()
+        self.rect.x += self.__movement_vector.x * self.__speed
+        self.__collision_direction = "x"
+        self.__collisions_check()
+        self.rect.y += self.__movement_vector.y * self.__speed
+        self.__collision_direction = "y"
+        self.__collisions_check()
         # TUTORIAL CODE ---
 
-        if self.move_count == 1:
-            self.walk_sound.play(999)  # if we start to walk, then play walking sound
-            self.walk_sound.set_volume(0.5)
-        self.move_count += 1
+        if self.__move_count == 1:
+            self.__walk_sound.play(999)  # if we start to walk, then play walking sound
+            self.__walk_sound.set_volume(0.5)
+        self.__move_count += 1
 
-        if self.movement_vector == [0,0]:
-            self.walk_sound.stop()  # once we stop walking, stop the walking playing sound
-            self.move_count = 0
+        if self.__movement_vector == [0, 0]:
+            self.__walk_sound.stop()  # once we stop walking, stop the walking playing sound
+            self.__move_count = 0
 
 
 
-    def damage_cooldown(self):
+    def __damage_cooldown(self):
         game_loop_time = pygame.time.get_ticks()
-        if self.is_attacking and round(self.attacking_frame, 1) == 3.9:
-            self.sword.kill()
-            self.is_attacking = False
+        if self.__is_attacking and round(self.__attacking_frame, 1) == 3.9:
+            self.__sword.kill()
+            self.__is_attacking = False
 
         if not self.can_be_damaged and game_loop_time - self.time_damaged >= self.max_damage_time:
                 self.can_be_damaged = True
 
-    def collisions_check(self):
+    def __collisions_check(self):
         # TUTORIAL CODE ---
-        if self.collision_direction == "x":
-            for sprite in self.wall_sprites:
+        if self.__collision_direction == "x":
+            for sprite in self.__wall_sprites:
                 if sprite.rect.colliderect(self.rect):
-                    if self.movement_vector.x > 0:  # moving right
+                    if self.__movement_vector.x > 0:  # moving right
                         self.rect.right = sprite.rect.left
 
-                    if self.movement_vector.x < 0:  # moving left
+                    if self.__movement_vector.x < 0:  # moving left
                         self.rect.left = sprite.rect.right
 
-        if self.collision_direction == "y":
-            for sprite in self.wall_sprites:
+        if self.__collision_direction == "y":
+            for sprite in self.__wall_sprites:
                 if sprite.rect.colliderect(self.rect):
-                    if self.movement_vector.y > 0:  # moving down
+                    if self.__movement_vector.y > 0:  # moving down
                         self.rect.bottom = sprite.rect.top
 
-                    if self.movement_vector.y < 0:  # moving up
+                    if self.__movement_vector.y < 0:  # moving up
                         self.rect.top = sprite.rect.bottom
         # TUTORIAL CODE ---
 
         # POWERUPS
-        if self.collision_direction in "xy":
-            for sprite in self.powerup_sprites:
+        if self.__collision_direction in "xy":
+            for sprite in self.__powerup_sprites:
                 if sprite.rect.colliderect(self.rect):  # collision with powerup, and kills the sprite when they collide
-                    self.powerup_active = 300  # powerups last for 5 seconds (300 frames)
+                    self.__powerup_active = 300  # powerups last for 5 seconds (300 frames)
                     powerup_sound = pygame.mixer.Sound("../Audio/speed_powerup.mp3")  # plays powerup noise
                     powerup_sound.play()
                     powerup_sound.set_volume(0.5)
                     sprite.kill()
 
         # COINS
-        if self.collision_direction in "xy":
-            for sprite in self.coin_sprites:
+        if self.__collision_direction in "xy":
+            for sprite in self.__coin_sprites:
                 if sprite.rect.colliderect(self.rect):
                     # SOUND
                     coin_sound = pygame.mixer.Sound("../Audio/coin.mp3")
@@ -248,8 +246,8 @@ class Character(pygame.sprite.Sprite):
                     sprite.kill()
 
         # HEALTH POTION
-        if self.collision_direction in "xy":
-            for sprite in self.heath_pot_sprites:
+        if self.__collision_direction in "xy":
+            for sprite in self.__heath_pot_sprites:
                 if sprite.rect.colliderect(self.rect):
                     # SOUND
                     health_pot_sound = pygame.mixer.Sound("../Audio/health_pot.mp3")
@@ -257,83 +255,83 @@ class Character(pygame.sprite.Sprite):
                     health_pot_sound.set_volume(0.5)
 
                     # POINTS
-                    if self.max_health != self.health:
+                    if self.__max_health != self.health:
                         self.health += 100
                     sprite.kill()
 
         # EXIT
-        if self.collision_direction in "xy":
-            for sprite in self.exit_sprites:
+        if self.__collision_direction in "xy":
+            for sprite in self.__exit_sprites:
                 if sprite.rect.colliderect(self.rect):
-                    if not self.level_up:
+                    if not self.__level_up:
                         self.level_number += 1
-                        self.level_up = True
+                        self.__level_up = True
 
 
                     portal_sound = pygame.mixer.Sound("../Audio/portal.mp3")
                     portal_sound.play()
-                    self.walk_sound.stop()  # makes sure walking sound stops
+                    self.__walk_sound.stop()  # makes sure walking sound stops
                     portal_sound.set_volume(0.1)
 
                     self.in_level = False
                     sprite.kill()
 
 
-    def powerup_timer(self):
+    def __powerup_timer(self):
         # fonts and colours
-        if self.powerup_active:
+        if self.__powerup_active:
             # powerup graphic
-            self.powerup_timer_image = pygame.transform.scale(self.powerup_timer_image, (100, 100))
-            self.display_surface.blit(self.powerup_timer_image, (screen_width // 15, screen_height // 1.2))
+            self.__powerup_timer_image = pygame.transform.scale(self.__powerup_timer_image, (100, 100))
+            self.__display_surface.blit(self.__powerup_timer_image, (screen_width // 15, screen_height // 1.2))
 
             # powerup timer count
-            timer = self.font.render(str(self.powerup_active), 1, self.white)
-            self.display_surface.blit(timer, (screen_width // 10 - timer.get_width()//2, screen_height // 1.2))
+            timer = font.render(str(self.__powerup_active), 1, white)
+            self.__display_surface.blit(timer, (screen_width // 10 - timer.get_width() // 2, screen_height // 1.2))
 
-    def frame_updates(self):
+    def __frame_updates(self):
         # standard animation update
-        self.frame += self.frame_speed
-        if self.frame >= len(self.animation_dict["idle_right"]):  # could be any folder, but took the first one
-            self.frame = 0
+        self.__frame += self.__frame_speed
+        if self.__frame >= len(self.__animation_dict["idle_right"]):  # could be any folder, but took the first one
+            self.__frame = 0
 
         # special attack animation update
-        self.attacking_frame += self.attacking_frame_speed
-        if self.attacking_frame >= len(self.animation_dict["attack_down"]):
-            self.attacking_frame = 0
+        self.__attacking_frame += self.__attacking_frame_speed
+        if self.__attacking_frame >= len(self.__animation_dict["attack_down"]):
+            self.__attacking_frame = 0
 
         # check for powerup
-        if self.powerup_active:
-            self.frame_speed = 0.5
+        if self.__powerup_active:
+            self.__frame_speed = 0.5
 
         # check for sprint
-        elif self.sprinting:
-            self.frame_speed = 0.2
+        elif self.__sprinting:
+            self.__frame_speed = 0.2
 
         # walking speed
         else:
-            self.frame_speed = 0.1
+            self.__frame_speed = 0.1
 
 
-    def animation(self):
-        self.key_press = pygame.key.get_pressed()
+    def __animation(self):
+        self.__key_press = pygame.key.get_pressed()
         # --- ATTACKING ANIMATION ---
-        if self.is_attacking:
-            self.image = self.animation_dict[self.get_animation_state("attack")][int(self.attacking_frame)]
+        if self.__is_attacking:
+            self.image = self.__animation_dict[self.__get_animation_state("attack")][int(self.__attacking_frame)]
 
         # --- MOVING ANIMATION ---
-        elif self.key_press[pygame.K_s] or self.key_press[pygame.K_d] or self.key_press[pygame.K_a] or self.key_press[pygame.K_w]:
-            self.image = self.animation_dict[self.get_animation_state("moving")][int(self.frame)]
+        elif self.__key_press[pygame.K_s] or self.__key_press[pygame.K_d] or self.__key_press[pygame.K_a] or self.__key_press[pygame.K_w]:
+            self.image = self.__animation_dict[self.__get_animation_state("moving")][int(self.__frame)]
 
         # --- IDLE ANIMATION ---
         else:
-            self.image = self.animation_dict[self.get_animation_state("idle")][int(self.frame)]
+            self.image = self.__animation_dict[self.__get_animation_state("idle")][int(self.__frame)]
 
 
         # making the image
-        if self.character_direction == "left":  # if facing left, as need to flip image
+        if self.__character_direction == "left":  # if facing left, as need to flip image
             self.image = pygame.transform.flip(self.image, True, False)
 
-        self.image = pygame.transform.scale(self.image, (self.character_width, self.character_height))  # resizing image
+        self.image = pygame.transform.scale(self.image, (self.__character_width, self.__character_height))  # resizing image
 
         # player flicker on hit
         flicker = cos(0.1 * pygame.time.get_ticks())
@@ -343,46 +341,46 @@ class Character(pygame.sprite.Sprite):
         else:
             self.image.set_alpha(255)
 
-    def get_animation_state(self, state):
-        if self.character_direction == "left":
+    def __get_animation_state(self, state):
+        if self.__character_direction == "left":
             animation_type = f"{state}_right"
         else:
-            animation_type = f"{state}_{self.character_direction}"
+            animation_type = f"{state}_{self.__character_direction}"
 
         return animation_type
 
-    def points_timer(self):
+    def __points_timer(self):
         self.points -= (1/60)
 
     def damage_enemy(self):
         self.points += 5  # you get 5 points on enemy hit
-        return self.character_damage
+        return self.__character_damage
 
-    def heads_up_display(self):
+    def __heads_up_display(self):
         #  putting stats on the screen (health and stamina)
         stamina_index = (int(self.stamina_joined)//100)
         health_index = (self.health//100)
 
-        self.stamina_image = self.stats_animation_dict["stamina"][stamina_index]
+        self.stamina_image = self.__stats_animation_dict["stamina"][stamina_index]
         self.stamina_image = pygame.transform.scale(self.stamina_image, (400, 80))
-        self.display_surface.blit(self.stamina_image, (screen_width//70, screen_height // 5))
+        self.__display_surface.blit(self.stamina_image, (screen_width // 70, screen_height // 5))
 
-        self.health_image = self.stats_animation_dict["health"][health_index]
+        self.health_image = self.__stats_animation_dict["health"][health_index]
         self.health_image = pygame.transform.scale(self.health_image, (300,50))
-        self.display_surface.blit(self.health_image, (screen_width//70, screen_height // 7))
+        self.__display_surface.blit(self.health_image, (screen_width // 70, screen_height // 7))
 
 
         # putting points on the screen
-        self.point_display = self.font.render(f"Points: {int(self.points)}", 1, self.white)
-        self.display_surface.blit(self.point_display, (screen_width // 2 - self.point_display.get_width() // 2, screen_height // 100))
-        self.display_surface.blit(self.controls_instructions, (screen_width//20, screen_height//1.07))
-        self.display_surface.blit(self.controls_instructions_txt, (screen_width//10, screen_height//1.05))
+        self.point_display = font.render(f"Points: {int(self.points)}", 1, white)
+        self.__display_surface.blit(self.point_display, (screen_width // 2 - self.point_display.get_width() // 2, screen_height // 100))
+        self.__display_surface.blit(self.__controls_instructions, (screen_width // 20, screen_height // 1.07))
+        self.__display_surface.blit(self.__controls_instructions_txt, (screen_width // 10, screen_height // 1.05))
 
         # stuff to put on the hud if not in tutorial
         if not self.tutorial_mode:
-            self.level_number_text = self.controls_font.render(f"Level {self.level_number}/{number_of_levels+1}", 1, self.white)
-            self.display_surface.blit(self.level_number_text,
-                                  (screen_width // 2 - self.level_number_text.get_width() // 2, screen_height // 10))
+            self.level_number_text = self.__controls_font.render(f"Level {self.level_number}/{number_of_levels + 1}", 1, white)
+            self.__display_surface.blit(self.level_number_text,
+                                        (screen_width // 2 - self.level_number_text.get_width() // 2, screen_height // 10))
 
 
     def get_high_score(self):
@@ -400,14 +398,14 @@ class Character(pygame.sprite.Sprite):
 
 
     def update(self):
-        self.character_input()
-        self.damage_cooldown()
-        self.animation()
-        self.frame_updates()
-        self.character_movement()
-        self.powerup_timer()
-        self.points_timer()
-        self.heads_up_display()
+        self.__character_input()
+        self.__damage_cooldown()
+        self.__animation()
+        self.__frame_updates()
+        self.__character_movement()
+        self.__powerup_timer()
+        self.__points_timer()
+        self.__heads_up_display()
 
 
 

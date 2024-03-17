@@ -17,14 +17,14 @@ class GameChange:
         # menu text
         self.menu_txt_white = self.game_change_graphics_dict["menu"][0]
         self.menu_txt_yellow = self.game_change_graphics_dict["menu"][1]
-        self.menu_txt_pos = (screen_width // 10, screen_height // 1.5)
-        self.menu_option = OptionPress(self.menu_txt_white, self.menu_txt_yellow, self.menu_txt_pos)
+        self.__menu_txt_pos = (screen_width // 10, screen_height // 1.5)
+        self.__menu_option = OptionPress(self.menu_txt_white, self.menu_txt_yellow, self.__menu_txt_pos)
 
         # quit game text
         self.quit_txt_white = self.game_change_graphics_dict["quit"][0]
         self.quit_txt_yellow = self.game_change_graphics_dict["quit"][1]
-        self.quit_txt_pos = (screen_width // 1.4, screen_height // 1.5)
-        self.quit_option = OptionPress(self.quit_txt_white, self.quit_txt_yellow, self.quit_txt_pos)
+        self.__quit_txt_pos = (screen_width // 1.4, screen_height // 1.5)
+        self.__quit_option = OptionPress(self.quit_txt_white, self.quit_txt_yellow, self.__quit_txt_pos)
 
         self.game_change_font = pygame.font.Font("../Fonts/Pixel.ttf", 100)
         self.game_change_points_font = pygame.font.Font("../Fonts/Pixel.ttf", 60)
@@ -40,14 +40,14 @@ class GameChange:
 
     def display_menu(self):
         # draw buttons
-        self.menu_option.draw(pygame.display.get_surface())
-        self.quit_option.draw(pygame.display.get_surface())
+        self.__menu_option.draw(pygame.display.get_surface())
+        self.__quit_option.draw(pygame.display.get_surface())
 
-        if self.menu_option.pressed == True:  # returns player to the menu if "menu" pressed
+        if self.__menu_option.pressed == True:  # returns player to the menu if "menu" pressed
             self.game_win_state = False
             self.game_over_state = False
 
-        if self.quit_option.pressed == True:  # quits the game if "quit" is pressed
+        if self.__quit_option.pressed == True:  # quits the game if "quit" is pressed
             pygame.quit()
             sys.exit()
 

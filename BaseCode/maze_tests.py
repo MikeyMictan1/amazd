@@ -61,7 +61,7 @@ def testing_maze_walls():  # checks if there are walls of both "X" and "Y" in th
             if row_num == len(test_maze.maze_lst) - 1 and cell != "O":
                 assert cell == "Y", "No wall present at the bottom of the maze"
 
-            if cell not in " XUCHEPO" and test_maze.maze_lst[row_num + 1][col_num] == " ":
+            elif cell not in " XUCHEPO" and test_maze.maze_lst[row_num + 1][col_num] == " ":
                 assert cell == "Y", "Walls that are below empty space are the wrong cell"
 
 
