@@ -1,38 +1,40 @@
-import pygame, sys, os
-from mazelevel import MazeLevel
-from globalfunctions import *
-from maze import *
-from customlevels import tutorial, boss_arena
-from gamechange import GameWin, GameOver
-from main_menu import MainMenu
-from ingamemenus import InGameMenu, ControlsMenu
-from tutorial import TutorialLevel
+import pygame
+import sys
 
-# ----------------------------------------
+import customlevels as cust_lvl
+import gamechange as g_change
+import globalfunctions as gf
+import ingamemenus as ig_menu
+import mainmenu as mn_menu
+import maze as mz
+import mazelevel as mz_lvl
+import tutorial as tutor
+
+
 class Amazd:
     def __init__(self):
         pygame.init()
         # initial setup
-        self.__screen = pygame.display.set_mode((screen_width, screen_height))
+        self.__screen = pygame.display.set_mode((gf.screen_width, gf.screen_height))
         pygame.display.set_caption("Amaz'd")
         self.__clock = pygame.time.Clock()
         self.__first_run = True
-        self.__num_of_levels = number_of_levels
+        self.__num_of_levels = gf.number_of_levels
 
         # --- LEVEL INITIALISATION ---
-        self.__tutorial_maze = DepthFirstMaze(13, 13)
+        self.__tutorial_maze = mz.DepthFirstMaze(13, 13)
         self.__tutorial_maze_list = self.__tutorial_maze.create_maze()
-        self.__tutorial_maze = TutorialLevel(self.__tutorial_maze_list)
-        self.__tutorial = TutorialLevel(tutorial)
-        self.__boss_level = MazeLevel(boss_arena)
+        self.__tutorial_maze = tutor.TutorialLevel(self.__tutorial_maze_list)
+        self.__tutorial = tutor.TutorialLevel(cust_lvl.tutorial)
+        self.__boss_level = mz_lvl.MazeLevel(cust_lvl.boss_arena)
         self.__create_levels()
 
         # --- MENUS INITIALISATION ---
-        self.__main_menu = MainMenu()
-        self.__in_game_menu = InGameMenu()
-        self.__controls_menu = ControlsMenu()
-        self.__game_win = GameWin()
-        self.__game_over = GameOver()
+        self.__main_menu = mn_menu.MainMenu()
+        self.__in_game_menu = ig_menu.InGameMenu()
+        self.__controls_menu = ig_menu.ControlsMenu()
+        self.__game_win = g_change.GameWin()
+        self.__game_over = g_change.GameOver()
 
     def run(self):
         while True:
@@ -67,18 +69,18 @@ class Amazd:
                 self.__handle_controls_menu()
 
             pygame.display.update()
-            self.__clock.tick(FPS)
+            self.__clock.tick(gf.FPS)
 
     def __reset_levels(self):
         self.__main_menu.game_on = False
-        self.__boss_level = MazeLevel(boss_arena)
+        self.__boss_level = mz_lvl.MazeLevel(cust_lvl.boss_arena)
         self.__create_levels()
         self.__reset_menus()
 
     def __reset_tutorial(self):
         self.__main_menu.tutorial_on = False
-        self.__tutorial_maze = TutorialLevel(self.__tutorial_maze_list)
-        self.__tutorial = TutorialLevel(tutorial)
+        self.__tutorial_maze = tutor.TutorialLevel(self.__tutorial_maze_list)
+        self.__tutorial = tutor.TutorialLevel(cust_lvl.tutorial)
         self.__reset_menus()
 
     def __reset_menus(self):
@@ -130,18 +132,20 @@ class Amazd:
             if level_num % 2 == 0:
                 maze_height += level_num  # makes the mazes bigger every 2 levels by adding "i", so 7 7, 9 9, 13 13, etc
                 maze_width += level_num
-            depth_first_maze = DepthFirstMaze(maze_width, maze_height)
+            depth_first_maze = mz.DepthFirstMaze(maze_width, maze_height)
             self.all_mazes.append(depth_first_maze.create_maze())
-            self.all_levels.append(MazeLevel(self.all_mazes[level_num]))
+            self.all_levels.append(mz_lvl.MazeLevel(self.all_mazes[level_num]))
 
-    def __load_levels(self, current_level, previous_level):  # currently does nothing
-        if not previous_level.is_active and current_level.is_active:  # if previous level is not active, and current level is active then run the current level
+    def __load_levels(self, current_level, previous_level):  # loads and runs a level
+        # --- If previous level is not active, and current level is active then run the current level ---
+        if not previous_level.is_active and current_level.is_active:
             self.__main_menu.game_on = False
             current_level.run_level()
             self.__check_game_over(current_level)
-            if self.__first_run:  # if this is the first loop of this function for the current level, then carryover player data
-                current_level.character_level_carryover(previous_level.character.points, previous_level.character.health,
-                                                     previous_level.character.level_number)
+            #  --- if this is the first loop of this function for the current level, then carryover player data ---
+            if self.__first_run:
+                current_level.character_level_carryover(previous_level.character.points, previous_level.character.health
+                                                        , previous_level.character.level_number)
 
                 self.__first_run = False  # makes sure all other loops of the function don't carry over player data
 
@@ -168,10 +172,10 @@ class Amazd:
         if not self.__boss_level.is_active:  # when you reach the end of the maze
             self.__boss_level.character.get_high_score()
             self.__game_win.run(self.__boss_level.character.points)
-            self.__game_win = GameWin()
+            self.__game_win = g_change.GameWin()
             self.__reset_levels()
 
-    def __check_game_over(self, current_level):
+    def __check_game_over(self, current_level):  # checks if we need to go into the game over menu
         if current_level.character.health <= 0 or current_level.character.points <= 0:
             self.__game_over.run(current_level.character.points)
 
@@ -182,9 +186,8 @@ class Amazd:
                 else:
                     self.__reset_levels()
 
-                self.__game_over = GameOver()
+                self.__game_over = g_change.GameOver()
 
 
 amazd = Amazd()
 amazd.run()
-

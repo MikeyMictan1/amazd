@@ -6,9 +6,6 @@ tile_size = 150
 screen_width = 1200
 screen_height = 6 * tile_size  # 21 is len(maze_lst)
 
-#screen_width = 3500
-#screen_height = 9 * tile_size  # 21 is len(maze_lst)
-
 FPS = 60
 pygame.init()
 font = pygame.font.Font("../Fonts/Pixel.ttf", 100)
@@ -17,7 +14,8 @@ tutorial_font = pygame.font.Font("../Fonts/Pixel.ttf", 20)
 
 # colours
 white = (255, 255, 255)
-number_of_levels = 7
+number_of_levels = 1
+
 
 def img_centre(image):
     width = screen_width // 2 - image.get_width() // 2
@@ -36,8 +34,9 @@ def load_graphics(filepath):
 
     return graphic_surface_list  # returns the list of all loaded images
 
+
 def import_graphics_dict(sprite_name, animation_dict, filepath):
-    main_path = (f"{filepath}/{sprite_name}/")
+    main_path = f"{filepath}/{sprite_name}/"
 
     for animation_type in animation_dict.keys():
         animation_dict[animation_type] = load_graphics(main_path + animation_type)

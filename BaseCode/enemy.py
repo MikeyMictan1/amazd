@@ -1,6 +1,8 @@
 import pygame
-from globalfunctions import *
-from math import cos, sqrt
+import math
+
+import globalfunctions as gf
+
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, enemy_name, pos, groups, wall_sprites, character):
@@ -15,15 +17,15 @@ class Enemy(pygame.sprite.Sprite):
         self.character = character
 
         # graphics setup
-        self.__animations_dict = {"idle":[], "moving":[], "attacking":[]}
-        self.__animations_dict = import_graphics_dict(enemy_name, self.__animations_dict, "../Graphics/enemy")
+        self.__animations_dict = {"idle": [], "moving": [], "attacking": []}
+        self.__animations_dict = gf.import_graphics_dict(enemy_name, self.__animations_dict, "../Graphics/enemy")
 
         self.__animation_state = "idle"
         self.image = self.__animations_dict[self.__animation_state][self.__frame_index]
         self.image = pygame.transform.scale(self.image, (50, 64))
 
         # movement
-        self.rect = self.image.get_rect(topleft = self.__position)
+        self.rect = self.image.get_rect(topleft=self.__position)
         self.__wall_sprites = wall_sprites
 
         # player-enemy interactions
@@ -67,12 +69,12 @@ class Enemy(pygame.sprite.Sprite):
         x_squared_distance = (character_coordinate[0] - enemy_coordinate[0]) ** 2
         y_squared_distance = (character_coordinate[1] - enemy_coordinate[1]) ** 2
 
-        enemy_character_distance = sqrt(x_squared_distance + y_squared_distance)
+        enemy_character_distance = math.sqrt(x_squared_distance + y_squared_distance)
         enemy_character_vector = character_coordinate - enemy_coordinate
 
         return (enemy_character_distance, enemy_character_vector)
 
-    def enemy_hit(self, character): # enemy gets hit
+    def enemy_hit(self, character):  # enemy gets hit
         enemy_character_info = self.__enemy_character_distance_vector(character)
         enemy_player_vector = enemy_character_info[1]
 
@@ -129,10 +131,10 @@ class Enemy(pygame.sprite.Sprite):
         else:
             self.image = pygame.transform.scale(self.image, (50, 64))
 
-        self.rect = self.image.get_rect(center = self.rect.center)
+        self.rect = self.image.get_rect(center=self.rect.center)
 
         # enemy flickers on hit
-        flicker = cos(0.1 * pygame.time.get_ticks())
+        flicker = math.cos(0.1 * pygame.time.get_ticks())
         if not self.can_be_damaged and flicker > 0:
             self.image.set_alpha(50)
 
@@ -192,6 +194,3 @@ class Enemy(pygame.sprite.Sprite):
         self.__enemy_movement()
         self.__animation()
         self.__check_enemy_death()
-
-
-

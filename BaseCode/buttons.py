@@ -1,4 +1,5 @@
-from globalfunctions import *
+import pygame
+
 
 class OptionPress:
     def __init__(self, image1, image2, position):

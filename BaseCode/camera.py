@@ -1,5 +1,5 @@
 import pygame
-from globalfunctions import *
+import globalfunctions as gf
 
 class GameCamera(pygame.sprite.Group):
     def __init__(self):
@@ -11,8 +11,8 @@ class GameCamera(pygame.sprite.Group):
 
     def draw_camera_offset(self, character):
         # getting the offset
-        self.__character_movement_offset.x = character.rect.centerx - (screen_width // 2)
-        self.__character_movement_offset.y = character.rect.centery - (screen_height // 2)
+        self.__character_movement_offset.x = character.rect.centerx - (gf.screen_width // 2)
+        self.__character_movement_offset.y = character.rect.centery - (gf.screen_height // 2)
 
         for sprite in self.sprites():
             # we can add a vector to sprite.rect (an offset that effects where the sprite will be drawn)
