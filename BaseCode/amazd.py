@@ -71,19 +71,19 @@ class Amazd:
             pygame.display.update()
             self.__clock.tick(gf.FPS)
 
-    def __reset_levels(self):
+    def __reset_levels(self):  # resets all levels, to be played again
         self.__main_menu.game_on = False
         self.__boss_level = mz_lvl.MazeLevel(cust_lvl.boss_arena)
         self.__create_levels()
         self.__reset_menus()
 
-    def __reset_tutorial(self):
+    def __reset_tutorial(self):  # resets the tutorial, to be played again
         self.__main_menu.tutorial_on = False
         self.__tutorial_maze = tutor.TutorialLevel(self.__tutorial_maze_list)
         self.__tutorial = tutor.TutorialLevel(cust_lvl.tutorial)
         self.__reset_menus()
 
-    def __reset_menus(self):
+    def __reset_menus(self):  # resets all menus, to be used again
         self.__main_menu.in_menu = True
         self.__first_run = True
         self.__in_game_menu.__escape_counter = 0
@@ -100,7 +100,7 @@ class Amazd:
             self.__reset_levels()
             self.__reset_tutorial()
 
-    def __handle_controls_menu(self):
+    def __handle_controls_menu(self):  # displays the controls menu
         self.__controls_menu.display_menu()
 
     def __handle_tutorials(self):

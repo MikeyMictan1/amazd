@@ -169,7 +169,7 @@ class Character(pygame.sprite.Sprite):
             self.__speed = 15
 
     def __character_movement(self):
-        # TUTORIAL CODE ---
+        # CLEAR CODE INSPIRED ---
         if self.__movement_vector.magnitude() != 0:  # if vector has length
             self.__movement_vector = self.__movement_vector.normalize()  # set length of vector to 1 no matter what
             # direction
@@ -180,7 +180,7 @@ class Character(pygame.sprite.Sprite):
         self.rect.y += self.__movement_vector.y * self.__speed
         self.__collision_direction = "y"
         self.__collisions_check()
-        # TUTORIAL CODE ---
+        # CLEAR CODE INSPIRED ---
 
         if self.__move_count == 1:
             self.__walk_sound.play(999)  # if we start to walk, then play walking sound
@@ -201,7 +201,7 @@ class Character(pygame.sprite.Sprite):
             self.can_be_damaged = True
 
     def __collisions_check(self):
-        # TUTORIAL CODE ---
+        # CLEAR CODE INSPIRED ---
         if self.__collision_direction == "x":
             for sprite in self.__wall_sprites:
                 if sprite.rect.colliderect(self.rect):
@@ -219,7 +219,7 @@ class Character(pygame.sprite.Sprite):
 
                     if self.__movement_vector.y < 0:  # moving up
                         self.rect.top = sprite.rect.bottom
-        # TUTORIAL CODE ---
+        # CLEAR CODE INSPIRED ---
 
         # POWERUPS
         if self.__collision_direction in "xy":
@@ -338,7 +338,7 @@ class Character(pygame.sprite.Sprite):
         else:
             self.image.set_alpha(255)
 
-    def __get_animation_state(self, state):
+    def __get_animation_state(self, state):  # finds what direction and action is happening to the character
         if self.__character_direction == "left":
             animation_type = f"{state}_right"
         else:
@@ -346,7 +346,7 @@ class Character(pygame.sprite.Sprite):
 
         return animation_type
 
-    def __points_timer(self):
+    def __points_timer(self):  # so points slowly go down every second while in the game
         self.points -= (1 / 60)
 
     def damage_enemy(self):
@@ -389,12 +389,13 @@ class Character(pygame.sprite.Sprite):
         with open("high_score.txt", "r") as high_score_file:  # reads the file for the high score
             self.high_score = int(high_score_file.read())
 
-        if self.points > self.high_score:  # if the points the user has is greater than the high score, then it becomes the high score
+        # if the points the user has is greater than the high score, then it becomes the high score
+        if self.points > self.high_score:
             self.high_score = int(self.points)
             with open("high_score.txt", "w") as high_score_file:
                 high_score_file.write(str(self.high_score))
 
-    def update(self):
+    def update(self):  # runs everything
         self.__character_input()
         self.__damage_cooldown()
         self.__animation()

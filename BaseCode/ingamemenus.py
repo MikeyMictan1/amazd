@@ -11,6 +11,7 @@ class InGameMenu(g_change.GameChange):
         super().__init__()
         self.in_game_menu_state = False
 
+        # --- GRAPHICS ---
         self.__in_game_menu_graphics_dict = {"continue": [], "overlay": []}
         self.__in_game_menu_graphics_dict = gf.import_graphics_dict("ingamemenu", self.__in_game_menu_graphics_dict,
                                                                  "../Graphics")
@@ -31,32 +32,34 @@ class InGameMenu(g_change.GameChange):
 
         self.__in_game_menu_txt = gf.font.render("IN-GAME MENU", 1, gf.white)
         self.__in_game_menu_sound = pygame.mixer.Sound("../Audio/open_maze_menu1.mp3")
+        # --- GRAPHICS ---
 
         self.escape_counter = 0
 
-    def run_menu(self):
+    def run_menu(self):  # sets up the menu - sets its state to "true", and plays the menu open sound
         self.__in_game_menu_sound.play()
         self.__in_game_menu_sound.set_volume(0.1)
         self.escape_counter += 1
         self.in_game_menu_state = True
 
-    def display_menu(self):
+    def display_menu(self):  # displays the menu on the screen
         if self.escape_counter % 2 == 0:  # makes sure esc will open AND close the in game menu
             self.in_game_menu_state = False
 
         self.screen.blit(self.menu_overlay, (gf.img_centre(self.menu_overlay)[0], gf.img_centre(self.menu_overlay)[1]))
         self.screen.blit(self.__in_game_menu_txt, (gf.img_centre(self.__in_game_menu_txt)[0], gf.screen_height // 10))
 
+        # draws menu buttons
         self.__menu_option.draw(pygame.display.get_surface())
         self.__continue_option.draw(pygame.display.get_surface())
         self.__quit_option.draw(pygame.display.get_surface())
 
-        if self.__continue_option.pressed:
+        if self.__continue_option.pressed:  # if continue button pressed, close menu
             self.escape_counter += 1
             self.in_game_menu_state = False
             self.__continue_option.pressed = False
 
-        if self.__menu_option.pressed:
+        if self.__menu_option.pressed:  # if menu button pressed, open the main menu
             self.escape_counter += 1
             self.__menu_option.pressed = False
             self.in_game_menu_state = False
@@ -74,6 +77,7 @@ class ControlsMenu(InGameMenu):
         self.__control_set_image = pygame.transform.scale(self.__control_set_image, (500, 600))
 
     def display_menu(self):
+        # makes sure the menu will open and close after open/close buttons are pressed
         if self.escape_counter % 2 == 0:
             self.in_game_menu_state = False
 

@@ -14,7 +14,7 @@ class OptionPress:
 
     def __MousePress(self):
         __mouse_rect = pygame.mouse.get_pos()
-        __option_hover_sound = pygame.mixer.Sound("../Audio/option_hover_music.mp3") # terraria
+        __option_hover_sound = pygame.mixer.Sound("../Audio/option_hover_music.mp3")
         # if hovering mouse over option, play sound and change image to yellow text image
         if self.__button_rect.collidepoint(__mouse_rect):
             __option_hover_sound.play()
@@ -26,7 +26,7 @@ class OptionPress:
         else:
             self.__option_image = self.__image1
 
-    def draw(self, screen):
+    def draw(self, screen):  # draws button onto the screen in specified position
         self.__MousePress()
         screen.blit(self.__option_image, self.__position)
 

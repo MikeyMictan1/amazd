@@ -81,11 +81,12 @@ class GameOver(GameChange):
         self.__end_points = int(points)
         self.__score_txt = self.game_change_points_font.render(f"POINTS BEFORE DEATH:{self.__end_points}", 1, gf.white)
 
+        #  plays game over music
         pygame.mixer.stop()
         self.__game_over_music.play()
         self.__game_over_music.set_volume(0.1)
 
-        while self.game_over_state:
+        while self.game_over_state:  # while we are in the game over menu
             self.event_quit()
 
             # game over visuals
@@ -93,6 +94,7 @@ class GameOver(GameChange):
             self.screen.blit(self.__game_over_txt, (gf.img_centre(self.__game_over_txt)[0], gf.screen_height // 20))
             self.screen.blit(self.__score_txt, (gf.img_centre(self.__score_txt)[0], gf.screen_height // 4))
 
+            # animations for the character icon in the middle of the game over screen
             self.frame += self.frame_speed
             if self.frame >= len(self.__game_over_graphics_dict["fallen_player"]):
                 self.frame = 0
@@ -127,11 +129,12 @@ class GameWin(GameChange):
         self.__end_points = int(points)
         self.__score_txt = self.game_change_points_font.render(f"POINTS:{self.__end_points}", 1, gf.white)
 
+        #  plays game win music
         pygame.mixer.stop()
         self.__game_win_music.play()
         self.__game_win_music.set_volume(0.1)
 
-        while self.game_win_state:
+        while self.game_win_state:  # while in the game win menu
             self.event_quit()
 
             # game over visuals
@@ -141,6 +144,7 @@ class GameWin(GameChange):
             self.screen.blit(self.__score_txt, (gf.img_centre(self.__score_txt)[0], gf.screen_height // 3))
             self.screen.blit(self.logo_image, (gf.img_centre(self.logo_image)[0], gf.screen_height // 1.5))
 
+            #  animations for the slime enemy icon in the middle of the game over screen
             self.frame += self.frame_speed
             if self.frame >= len(self.__game_win_graphics_dict["victory_slime"]):
                 self.frame = 0

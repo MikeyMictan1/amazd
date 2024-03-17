@@ -8,7 +8,7 @@ class TutorialLevel(MazeLevel):
     def __init__(self, maze_lst):
         super().__init__(maze_lst)
         self.level_type = "tutorial"
-
+        # --- TUTORIAL GRAPHICS SETUP ---
         self.__screen = pygame.display.set_mode((gf.screen_width, gf.screen_height))
         self.__coin_txt = gf.tutorial_font.render("Coin (pickup for 20 points)", 1, gf.white)
         self.__stamina_txt = gf.tutorial_font.render("Stamina bar (sprint)", 1, gf.white)
@@ -26,6 +26,7 @@ class TutorialLevel(MazeLevel):
         self.coin_image = pygame.transform.scale(self.coin_image, (70, 70))
 
     def tutorial_hud(self):
+        # --- GRAPHICS FOR THE FIRST TUTORIAL LEVEL ---
         # images
         self.__screen.blit(self.coin_image,
                            (gf.img_centre(self.coin_image)[0], gf.screen_height // 1.13))
@@ -41,6 +42,7 @@ class TutorialLevel(MazeLevel):
                            (gf.img_centre(self.__tip_txt_3)[0], gf.screen_height // 1.2))
 
     def tutorial_two_hud(self):
+        # --- GRAPHICS FOR THE SECOND TUTORIAL LEVEL ---
         self.__screen.blit(self.__objective_txt,
                            (gf.img_centre(self.__objective_txt)[0], gf.screen_height // 1.2))
 

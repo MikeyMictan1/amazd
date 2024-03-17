@@ -25,6 +25,7 @@ class GameCamera(pygame.sprite.Group):
             else:
                 self.__screen.blit(sprite.image, character_movement_offset_pos)
 
+            # If the sprite is an enemy, the run the enemy's enemy_character_state method
             if hasattr(sprite, "enemy_name"):
                 sprite.enemy_character_state(character)
 

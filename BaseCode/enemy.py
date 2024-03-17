@@ -38,7 +38,7 @@ class Enemy(pygame.sprite.Sprite):
 
         # stats
         self.enemy_name = enemy_name
-        self.knockback = 3
+        self.knock_back = 3
         self.enemy_damage = 100
 
         if self.enemy_name == "slime":
@@ -62,33 +62,34 @@ class Enemy(pygame.sprite.Sprite):
             self.character.can_be_damaged = False
             self.character.time_damaged = pygame.time.get_ticks()
 
-    def __enemy_character_distance_vector(self, character):
+    def __enemy_character_distance_vector(self, character):  # finds distance and vector between the enemy and character
         character_coordinate = pygame.math.Vector2(character.rect.center)
         enemy_coordinate = pygame.math.Vector2(self.rect.center)
 
         x_squared_distance = (character_coordinate[0] - enemy_coordinate[0]) ** 2
         y_squared_distance = (character_coordinate[1] - enemy_coordinate[1]) ** 2
 
-        enemy_character_distance = math.sqrt(x_squared_distance + y_squared_distance)
+        enemy_character_distance = math.sqrt(x_squared_distance + y_squared_distance)  # pythagorean theorem
         enemy_character_vector = character_coordinate - enemy_coordinate
 
-        return (enemy_character_distance, enemy_character_vector)
+        return enemy_character_distance, enemy_character_vector
 
     def enemy_hit(self, character):  # enemy gets hit
         enemy_character_info = self.__enemy_character_distance_vector(character)
         enemy_player_vector = enemy_character_info[1]
 
         if self.can_be_damaged:  # if enemy can be damaged
-            self.__movement_vector = enemy_player_vector  # getting enemy direction and moving them in a different direction
+            self.__movement_vector = enemy_player_vector  # get enemy direction and move it in a different direction
             self.health -= character.damage_enemy()
             self.hit_time = pygame.time.get_ticks()
             self.can_be_damaged = False
 
-    def enemy_character_state(self, character):
+    def enemy_character_state(self, character):  # decides what state the enemy should be in
         enemy_character_info = self.__enemy_character_distance_vector(character)
         enemy_character_distance = enemy_character_info[0]
         enemy_character_vector = enemy_character_info[1]
 
+        # if the enemy is close enough to the character, then the state should be "attacking"
         if enemy_character_distance <= self.distance_to_attack and self.attack_state:
             if self.__animation_state != "attacking":
                 self.__frame_index = 0
@@ -96,15 +97,17 @@ class Enemy(pygame.sprite.Sprite):
             self.time_of_attack = pygame.time.get_ticks()
             self.__character_hit()
 
+        # if the enemy is close enough to the character, then the state should be "moving"
         elif enemy_character_distance <= self.distance_to_notice:
             self.__animation_state = "moving"
             self.__movement_vector = enemy_character_vector
 
+        # if the enemy is not close to the character, then the state of the enemy will be "idle"
         else:
             self.__animation_state = "idle"
             self.__movement_vector = pygame.math.Vector2()
 
-    def __animation(self):
+    def __animation(self):  # handles animations of the enemy
         self.__frame_index += self.__frame_speed
 
         # animating player
@@ -141,18 +144,18 @@ class Enemy(pygame.sprite.Sprite):
         else:
             self.image.set_alpha(255)
 
-    def __damage_cooldown(self):
+    def __damage_cooldown(self):  # So that the enemy can only attack, or be attacked every few seconds
         game_loop_time = pygame.time.get_ticks()
 
         if not self.attack_state and (game_loop_time - self.time_of_attack) >= self.attack_cooldown:
             self.attack_state = True
 
         if not self.can_be_damaged:
-            self.__movement_vector *= -self.knockback  # enemy knockback
+            self.__movement_vector *= -self.knock_back  # knocks the enemy back in the opposite direction to the player
             if game_loop_time - self.hit_time >= self.max_damage_time:
                 self.can_be_damaged = True
 
-    def __check_enemy_death(self):
+    def __check_enemy_death(self):  # checks if the enemy is dead, if so, then kill the enemy sprite
         if self.health <= 0:
             enemy_death_sound = pygame.mixer.Sound("../Audio/enemy_death_sound.mp3")
             enemy_death_sound.play()
@@ -161,16 +164,18 @@ class Enemy(pygame.sprite.Sprite):
 
     def __enemy_movement(self):
         if self.__movement_vector.magnitude():  # if vector has length
-            self.__movement_vector = self.__movement_vector.normalize()  # set length of vector to 1 no matter what direction
+            self.__movement_vector = self.__movement_vector.normalize()  # length of vector = 1 no matter the direction
 
         self.rect.x += self.__movement_vector.x * self.speed
+        # checks if the enemy collides with a wall in "x" direction, if so, don't let them move through it
         self.__collision_direction = "x"
         self.__wall_collisions_check()
         self.rect.y += self.__movement_vector.y * self.speed
+        # checks if the enemy collides with a wall in "y" direction, if so, don't let them move through it
         self.__collision_direction = "y"
         self.__wall_collisions_check()
 
-    def __wall_collisions_check(self):
+    def __wall_collisions_check(self):  # checks if the enemy collides with walls
         if self.__collision_direction == "x":
             for sprite in self.__wall_sprites:
                 if sprite.rect.colliderect(self.rect):
