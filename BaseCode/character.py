@@ -7,9 +7,10 @@ import sword
 
 
 class Character(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, wall_sprites, powerup_sprites, coin_sprites, health_pot_sprites, exit_sprites,
+    def __init__(self, pos: tuple, groups: list, wall_sprites, powerup_sprites, coin_sprites, health_pot_sprites, exit_sprites,
                  sword_sprites):
         super().__init__(groups)
+
         # general setup
         self.__key_press = pygame.key.get_pressed()
         self.tutorial_mode = False

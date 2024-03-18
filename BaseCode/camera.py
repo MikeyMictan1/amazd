@@ -1,22 +1,51 @@
 import pygame
+import character as chara
 import globalfunctions as gf
 
+
 class GameCamera(pygame.sprite.Group):
+    """
+    Description:
+        Class for the camera that makes sure the character stays in the centre of the screen, with everything else moving
+        around the character.
+
+    Inherits:
+        pygame.sprite.Group: Inherits from pygame's sprite class to make sprite interactions and functions easier to
+        handle.
+
+    Attributes:
+        __screen (pygame.Surface):  the screen for which the camera will draw objects onto in their correct positions.
+        __character_movement_offset (tuple): Vector for the offset to move all sprites due to the character moving.
+        __character_image_offset (tuple): vector for the offset to move the character due to the size of the characters
+        images, so that the image of the character is in the same place as its rect.
+    """
     def __init__(self):
+        """
+        Description:
+            Initialisation function for the GameCamera class. Initialises the screen and character offsets.
+        """
         # general setup
-        super().__init__()
+        super().__init__()  # super init to get methods and attributes from the sprite class
         self.__screen = pygame.display.get_surface()
         self.__character_movement_offset = pygame.math.Vector2()
         self.__character_image_offset = (-75, -50)
 
-    def draw_camera_offset(self, character):
+    def draw_camera_offset(self, character: chara.Character):
+        """
+        Description:
+            Draws all sprites onto the screen, draws them with an offset, which is the character's current position
+            subtract half the screen width/height, so the character is always drawn in the centre of the screen.
+
+        Parameters:
+            character (chara.Character): The character sprite currently playing the game
+        """
         # getting the offset
         self.__character_movement_offset.x = character.rect.centerx - (gf.screen_width // 2)
         self.__character_movement_offset.y = character.rect.centery - (gf.screen_height // 2)
 
         for sprite in self.sprites():
-            # we can add a vector to sprite.rect (an offset that effects where the sprite will be drawn)
-            # draw the sprite image in the same place as the rectangle
+            # adding a vector to a sprite to effect where the sprite will be drawn on the screen, draw the sprites image
+            # in the same place as the rectangle.
             character_movement_offset_pos = sprite.rect.topleft - self.__character_movement_offset
 
             if sprite == character:
@@ -28,4 +57,3 @@ class GameCamera(pygame.sprite.Group):
             # If the sprite is an enemy, the run the enemy's enemy_character_state method
             if hasattr(sprite, "enemy_name"):
                 sprite.enemy_character_state(character)
-

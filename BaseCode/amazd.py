@@ -1,5 +1,4 @@
 import pygame
-import sys
 
 import customlevels as cust_lvl
 import gamechange as g_change
@@ -27,6 +26,7 @@ class Amazd:
         __tutorial (tutor.TutorialLevel): creates the custom maze for the tutorials first level
         __tutorial_maze (mz.DepthFirstMaze): Creates the dfs maze for the tutorials second level
         __boss_level (mz_lvl.MazeLevel): creates the custom maze for the boss level
+        __all_levels (list): A list of all the regular maze levels
 
         __main_menu (mn_menu.MainMenu): creates the object for the main menu
         __in_game_menu (ig_menu.InGameMenu): creates the object for the in game menu
@@ -54,7 +54,7 @@ class Amazd:
         self.__tutorial_maze = tutor.TutorialLevel(self.__tutorial_maze.create_maze())
         self.__tutorial = tutor.TutorialLevel(cust_lvl.tutorial)
         self.__boss_level = mz_lvl.MazeLevel(cust_lvl.boss_arena)
-        self.__create_levels()
+        self.__all_levels = self.__create_levels()
 
         # --- MENUS INITIALISATION ---
         self.__main_menu = mn_menu.MainMenu()
@@ -113,7 +113,7 @@ class Amazd:
         """
         self.__main_menu.game_on = False  # makes sure the game is not on before resetting all levels
         self.__boss_level = mz_lvl.MazeLevel(cust_lvl.boss_arena)
-        self.__create_levels()
+        self.__all_levels = self.__create_levels()
         self.__reset_menus()
 
     def __reset_tutorial(self):
@@ -154,7 +154,7 @@ class Amazd:
             self.__reset_levels()
             self.__reset_tutorial()
 
-    def __handle_controls_menu(self):  # displays the controls menu
+    def __handle_controls_menu(self):
         """
         Description:
             Displays the controls menu on the screen.
@@ -180,22 +180,30 @@ class Amazd:
         if not self.__tutorial_maze.is_active:  # when you reach the end of the tutorial maze
             self.__reset_tutorial()
 
-    def __run_tutorial(self, tutorial_type):
+    def __run_tutorial(self, tutorial_type: mz_lvl.MazeLevel):
         """
         Description:
             Runs an individual tutorial level
 
         Parameters:
-            tutorial_type (): The o
-
+            tutorial_type (mz_lvl.MazeLevel): The maze level object representing the tutorial level
         """
         tutorial_type.run_level()
         self.__check_game_over(tutorial_type)
         tutorial_type.character.tutorial_mode = True
 
-    def __create_levels(self):  # creates all the levels to play (customize later)
+    def __create_levels(self):
+        """
+        Description:
+            Creates all the depth-first mazes and translates them into pygame. All mazes added to the "all_levels"
+            list.
+            Mazes generated to get progressively more difficult as the player progresses through the game.
+
+        Returns:
+            all_levels_list (list): a list of all the regular maze levels
+        """
         self.all_mazes = []
-        self.all_levels = []
+        self.all_levels_list = []
 
         maze_width = 7
         maze_height = 7
@@ -206,9 +214,15 @@ class Amazd:
                 maze_width += level_num
             depth_first_maze = mz.DepthFirstMaze(maze_width, maze_height)
             self.all_mazes.append(depth_first_maze.create_maze())
-            self.all_levels.append(mz_lvl.MazeLevel(self.all_mazes[level_num]))
+            self.all_levels_list.append(mz_lvl.MazeLevel(self.all_mazes[level_num]))
 
-    def __load_levels(self, current_level, previous_level):  # loads and runs a level
+        return self.all_levels_list
+
+    def __load_levels(self, current_level: mz_lvl.MazeLevel, previous_level: mz_lvl.MazeLevel):
+        """
+        Description:
+            Loads and runs the current level, carries over player data from the previous data to the current level.
+        """
         # --- If previous level is not active, and current level is active then run the current level ---
         if not previous_level.is_active and current_level.is_active:
             self.__main_menu.game_on = False
@@ -225,19 +239,24 @@ class Amazd:
                 self.__first_run = True
 
     def __play_levels(self):
+        """
+        Description:
+            Plays all levels. Checks if the tutorial is being played, or if the main game is being played.
+            Resets all levels once the game is beaten.
+        """
         self.__handle_tutorials()  # runs tutorial when needed
 
         # --- RUNS FIRST LEVEL ---
         if self.__main_menu.game_on:
-            self.all_levels[0].run_level()
-            self.__check_game_over(self.all_levels[0])
+            self.__all_levels[0].run_level()
+            self.__check_game_over(self.__all_levels[0])
 
         # --- RUNS THE REST OF THE LEVELS ---
         for level_num in range(self.__num_of_levels - 1):
-            self.__load_levels(self.all_levels[level_num + 1], self.all_levels[level_num])
+            self.__load_levels(self.__all_levels[level_num + 1], self.__all_levels[level_num])
 
         # --- RUNS THE FINAL LEVEL ---
-        self.__load_levels(self.__boss_level, self.all_levels[self.__num_of_levels - 1])
+        self.__load_levels(self.__boss_level, self.__all_levels[self.__num_of_levels - 1])
         self.__check_game_over(self.__boss_level)
 
         # --- PLAYER HAS WON THE GAME ---
@@ -247,7 +266,14 @@ class Amazd:
             self.__game_win = g_change.GameWin()
             self.__reset_levels()
 
-    def __check_game_over(self, current_level):  # checks if we need to go into the game over menu
+    def __check_game_over(self, current_level: mz_lvl.MazeLevel):  # checks if we need to go into the game over menu
+        """
+        Description:
+            Displays the game over screen once the character dies.
+
+        Parameters:
+            current_level (mz_lvl.MazeLevel): The current maze level that the player is playing in.
+        """
         if current_level.character.health <= 0 or current_level.character.points <= 0:
             self.__game_over.run(current_level.character.points)
 
