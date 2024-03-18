@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="887a5ba4-2fb2-473d-8dc0-1fde4c81a3d9" name="Changes" comment="variable renaming complete, imports are better">
+    <list default="true" id="887a5ba4-2fb2-473d-8dc0-1fde4c81a3d9" name="Changes" comment="comments finished">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BaseCode/amazd.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/amazd.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BaseCode/buttons.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/buttons.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BaseCode/camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/camera.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BaseCode/character.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/character.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BaseCode/enemy.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/enemy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BaseCode/gamechange.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/gamechange.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BaseCode/ingamemenus.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/ingamemenus.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,7 +182,8 @@
       <workItem from="1710612558490" duration="1087000" />
       <workItem from="1710625919900" duration="801000" />
       <workItem from="1710675448054" duration="3379000" />
-      <workItem from="1710704063507" duration="7568000" />
+      <workItem from="1710704063507" duration="8487000" />
+      <workItem from="1710783728021" duration="3052000" />
     </task>
     <task id="LOCAL-00001" summary="Main py changed to amazd">
       <option name="closed" value="true" />
@@ -302,7 +297,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710709634746</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="comments finished">
+      <option name="closed" value="true" />
+      <created>1710714006693</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1710714006693</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -332,7 +335,8 @@
     <MESSAGE value="added tests" />
     <MESSAGE value="Halfway through public/privating variables" />
     <MESSAGE value="variable renaming complete, imports are better" />
-    <option name="LAST_COMMIT_MESSAGE" value="variable renaming complete, imports are better" />
+    <MESSAGE value="comments finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="comments finished" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/amazd_the_final$amazd__1_.coverage" NAME="amazd (1) Coverage Results" MODIFIED="1709765335550" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BaseCode" />
@@ -342,6 +346,6 @@
     <SUITE FILE_PATH="coverage/amazd_py$hash_table__1_.coverage" NAME="hash table (1) Coverage Results" MODIFIED="1710186056849" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="M:/School/YEAR 13/comp sci/dales" />
     <SUITE FILE_PATH="coverage/amazd_the_final$mazelevel.coverage" NAME="mazelevel Coverage Results" MODIFIED="1708371275790" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Base Code" />
     <SUITE FILE_PATH="coverage/amazd_the_final$amazd.coverage" NAME="amazd Coverage Results" MODIFIED="1709762814042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Base Code" />
-    <SUITE FILE_PATH="coverage/amazd_py$amazd__1_.coverage" NAME="amazd (1) Coverage Results" MODIFIED="1710712638084" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BaseCode" />
+    <SUITE FILE_PATH="coverage/amazd_py$amazd__1_.coverage" NAME="amazd (1) Coverage Results" MODIFIED="1710787122810" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BaseCode" />
   </component>
 </project>

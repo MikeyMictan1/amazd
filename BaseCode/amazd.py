@@ -12,7 +12,34 @@ import tutorial as tutor
 
 
 class Amazd:
+    """
+    Description:
+        The main game class of Amazd, acts as the class that runs the entire game.
+        Will handle menus, and create level objects.
+
+    Attributes:
+        __screen (pygame.Surface): The screen surface for which the entire game is written onto
+        __clock (pygame.time.Clock): Clock object that controls the frame rate of the game
+        __first_run (bool): flag variable that indicates if a level is in the game loop for the first time
+        __num_of_levels (int): The number of normal levels the player will have to go through in the game
+        __in_game (bool): boolean value for if the game is currently running
+
+        __tutorial (tutor.TutorialLevel): creates the custom maze for the tutorials first level
+        __tutorial_maze (mz.DepthFirstMaze): Creates the dfs maze for the tutorials second level
+        __boss_level (mz_lvl.MazeLevel): creates the custom maze for the boss level
+
+        __main_menu (mn_menu.MainMenu): creates the object for the main menu
+        __in_game_menu (ig_menu.InGameMenu): creates the object for the in game menu
+        __controls_menu (ig_menu.ControlsMenu): creates the object for the controls menu
+        __game_win (g_change.GameWin): creates the object for the game win menu
+        __game_over (g_change.GameOver): creates the object for the game over menu
+    """
+
     def __init__(self):
+        """
+        Description:
+            Initialisation function for the Amazd class. Initialises pygame, levels and all the menus.
+        """
         pygame.init()
         # initial setup
         self.__screen = pygame.display.set_mode((gf.screen_width, gf.screen_height))
@@ -20,11 +47,11 @@ class Amazd:
         self.__clock = pygame.time.Clock()
         self.__first_run = True
         self.__num_of_levels = gf.number_of_levels
+        self.__in_game = True
 
         # --- LEVEL INITIALISATION ---
         self.__tutorial_maze = mz.DepthFirstMaze(13, 13)
-        self.__tutorial_maze_list = self.__tutorial_maze.create_maze()
-        self.__tutorial_maze = tutor.TutorialLevel(self.__tutorial_maze_list)
+        self.__tutorial_maze = tutor.TutorialLevel(self.__tutorial_maze.create_maze())
         self.__tutorial = tutor.TutorialLevel(cust_lvl.tutorial)
         self.__boss_level = mz_lvl.MazeLevel(cust_lvl.boss_arena)
         self.__create_levels()
@@ -37,11 +64,19 @@ class Amazd:
         self.__game_over = g_change.GameOver()
 
     def run(self):
-        while True:
+        """
+        Description:
+            Is the public method that will run the game loop.
+
+            Checks if levels, menu, in-game menu or controls menu need to be played, and checks for pygame events
+            such as keyboard inputs.
+            Draws the pygame display onto the screen 60 times per second.
+        """
+        while self.__in_game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                    sys.exit()
+                    self.__in_game = False
 
                 # in-game menu
                 if event.type == pygame.KEYDOWN and (event.key == pygame.K_TAB or event.key == pygame.K_ESCAPE):
@@ -71,25 +106,44 @@ class Amazd:
             pygame.display.update()
             self.__clock.tick(gf.FPS)
 
-    def __reset_levels(self):  # resets all levels, to be played again
-        self.__main_menu.game_on = False
+    def __reset_levels(self):
+        """
+        Description:
+            Randomly regenerates all levels, to be played again
+        """
+        self.__main_menu.game_on = False  # makes sure the game is not on before resetting all levels
         self.__boss_level = mz_lvl.MazeLevel(cust_lvl.boss_arena)
         self.__create_levels()
         self.__reset_menus()
 
-    def __reset_tutorial(self):  # resets the tutorial, to be played again
+    def __reset_tutorial(self):
+        """
+        Description:
+            Randomly regenerates the tutorial levels, to be played again
+        """
         self.__main_menu.tutorial_on = False
-        self.__tutorial_maze = tutor.TutorialLevel(self.__tutorial_maze_list)
+        self.__tutorial_maze = mz.DepthFirstMaze(13, 13)
+        self.__tutorial_maze = tutor.TutorialLevel(self.__tutorial_maze.create_maze())
         self.__tutorial = tutor.TutorialLevel(cust_lvl.tutorial)
         self.__reset_menus()
 
-    def __reset_menus(self):  # resets all menus, to be used again
+    def __reset_menus(self):
+        """
+        Description:
+            Resets all menus, to be played again
+        """
         self.__main_menu.in_menu = True
         self.__first_run = True
         self.__in_game_menu.__escape_counter = 0
         self.__controls_menu.__escape_counter = 0
 
     def __handle_in_game_menu(self):
+        """
+        Description:
+            Displays the in-game menu on the screen.
+            Checks if the in-game menu is opened while the controls menu is open, and closes the controls menu if so.
+            Checks if the menu option was pressed in the in-game menu, and resets all levels if so.
+          """
         # if we are in the controls menu when we try to access in game menu, close the controls menu
         if self.__controls_menu.in_game_menu_state:
             self.__controls_menu.in_game_menu_state = False
@@ -101,9 +155,19 @@ class Amazd:
             self.__reset_tutorial()
 
     def __handle_controls_menu(self):  # displays the controls menu
+        """
+        Description:
+            Displays the controls menu on the screen.
+        """
         self.__controls_menu.display_menu()
 
     def __handle_tutorials(self):
+        """
+        Description:
+            Runs the tutorial when pressed in the menu.
+            Checks if the first tutorial is beat, if so, run the second tutorial.
+            Resets all tutorials once the tutorial is beaten.
+          """
         if self.__main_menu.tutorial_on:  # runs the game tutorial
             self.__run_tutorial(self.__tutorial)
             self.__tutorial.tutorial_hud()  # hud
@@ -117,6 +181,14 @@ class Amazd:
             self.__reset_tutorial()
 
     def __run_tutorial(self, tutorial_type):
+        """
+        Description:
+            Runs an individual tutorial level
+
+        Parameters:
+            tutorial_type (): The o
+
+        """
         tutorial_type.run_level()
         self.__check_game_over(tutorial_type)
         tutorial_type.character.tutorial_mode = True
