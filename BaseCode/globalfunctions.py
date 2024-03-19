@@ -1,20 +1,23 @@
 import pygame
 import os
 
+# --- GAME SETTINGS SETUP ---
+# game size
 tile_size = 150
-
 screen_width = 1200
-screen_height = 6 * tile_size  # 21 is len(maze_lst)
+screen_height = 6 * tile_size
 
+# game frames per second, and number of levels
 FPS = 60
+number_of_levels = 2
 pygame.init()
+
+# fonts and colours
 font = pygame.font.Font("../Fonts/Pixel.ttf", 100)
 high_score_font = pygame.font.Font("../Fonts/Pixel.ttf", 50)
 tutorial_font = pygame.font.Font("../Fonts/Pixel.ttf", 20)
-
-# colours
 white = (255, 255, 255)
-number_of_levels = 1
+# --- GAME SETTINGS SETUP ---
 
 
 def img_centre(image):

@@ -6,7 +6,51 @@ import globalfunctions as gf
 
 
 class MainMenu:
+    """
+    Description:
+        Class that creates the main menu UI that the game will always launch on, and the game will always return to.
+        Used to launch the game, tutorial, view high score, reset high score, and quit.
+
+    Attributes:
+        in_menu (bool): flag that checks if the main menu is open
+        tutorial_on (bool): flag that checks if the tutorial should be running
+        game_on (bool): flag that checks if the game should be running
+
+        __screen (pygame.Surface): Screen that the menus will be drawn onto
+        __logo_image (pygame.Surface): Image of the logo of the game
+
+        __menu_music (pygame.mixer.Sound): Music to be played while in the main menu
+        __maze_music (pygame.mixer.Sound): Music to be played while in the maze
+
+        __character_dict (dict): dictionary for graphics of the character that appears in the main menu
+        __menu_graphics_dict (dict): dictionary for all other graphics used in the main menu
+
+        __game_title (pygame.font.render): title for the name of the game in the main menu
+        __main_menu_title (pygame.font.render): title text for the main menu
+        __background (pygame.Surface): Background image used in the main menu
+
+        __reset_score_white (pygame.Surface): Image for the reset button in white
+        __reset_score_yellow (pygame.Surface): Image for the reset button in yellow
+        __reset_score_pos (tuple): Position on the screen to draw the reset button
+
+        __play_txt_white (pygame.Surface): Image for the play button in white
+        __play_txt_yellow (pygame.Surface): Image for the play button in yellow
+        __play_txt_pos (tuple): Position on the screen to draw the play button
+
+        __tutorial_txt_white (pygame.Surface): Image for the tutorial button in white
+        __tutorial_txt_yellow (pygame.Surface): Image for the tutorial button in yellow
+        __tutorial_txt_pos (tuple): Position on the screen to draw the tutorial button
+
+        __quit_txt_white (pygame.Surface): Image for the quit button in white
+        __quit_txt_yellow (pygame.Surface): Image for the quit button in yellow
+        __quit_txt_pos (tuple): Position on the screen to draw the quit button
+    """
+
     def __init__(self):
+        """
+        Description:
+            Initialisation function for the main menu class.
+        """
         self.in_menu = True  # in the menu?
         self.tutorial_on = False  # tutorial option pressed?
         self.game_on = False  # play option pressed?
@@ -14,8 +58,8 @@ class MainMenu:
         # loading logo graphics
         self.__screen = pygame.display.set_mode((gf.screen_width, gf.screen_height))
         self.__logo_image = pygame.image.load(f"../Graphics/amazd_logo.png")
-        pygame.display.set_icon(self.__logo_image)
         self.__logo_image = pygame.transform.scale(self.__logo_image, (140, 280))
+        pygame.display.set_icon(self.__logo_image)
 
         # sound effects
         self.__menu_music = pygame.mixer.Sound("../Audio/maze_music.mp3")
@@ -52,6 +96,10 @@ class MainMenu:
         self.__quit_txt_pos = (gf.screen_width // 10, gf.screen_height // 1.5)
 
     def __game_option_pressed(self):
+        """
+        Description:
+            Closes the main menu, and starts the maze music, as the game should now be playing.
+        """
         self.__menu_music.stop()
         self.__maze_music.play(999)
         self.__maze_music.set_volume(0.05)
@@ -59,6 +107,10 @@ class MainMenu:
 
     # code for starting menu
     def menu(self):
+        """
+        Description:
+            Main method that runs the main menu.
+        """
         # initialising needed variables
         pygame.mixer.stop()
 
@@ -106,6 +158,10 @@ class MainMenu:
             pygame.display.update()
 
     def handle_menu_buttons(self):
+        """
+        Description:
+            Draws menu buttons on the screen, and checks if they have been pressed.
+        """
         # play menu option
         self.__play_option = btn.OptionPress(self.__play_txt_white, self.__play_txt_yellow, self.__play_txt_pos)
         self.__play_option.draw(pygame.display.get_surface())
@@ -116,7 +172,7 @@ class MainMenu:
 
         # tutorial menu option
         self.__tutorial_option = btn.OptionPress(self.__tutorial_txt_white, self.__tutorial_txt_yellow,
-                                             self.__tutorial_txt_pos)
+                                                 self.__tutorial_txt_pos)
         self.__tutorial_option.draw(pygame.display.get_surface())
 
         if self.__tutorial_option.pressed:
@@ -133,7 +189,7 @@ class MainMenu:
 
         # reset high score option
         self.__reset_score_option = btn.OptionPress(self.__reset_score_white, self.__reset_score_yellow,
-                                                self.__reset_score_pos)
+                                                    self.__reset_score_pos)
         self.__reset_score_option.draw(pygame.display.get_surface())
 
         if self.__reset_score_option.pressed:
