@@ -9,7 +9,7 @@ screen_height = 6 * tile_size
 
 # game frames per second, and number of levels
 FPS = 60
-number_of_levels = 2
+number_of_levels = 7
 pygame.init()
 
 # fonts and colours
