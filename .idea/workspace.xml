@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="887a5ba4-2fb2-473d-8dc0-1fde4c81a3d9" name="Changes" comment="FINAL CODE">
-      <change beforePath="$PROJECT_DIR$/BaseCode/globalfunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/globalfunctions.py" afterDir="false" />
-    </list>
+    <list default="true" id="887a5ba4-2fb2-473d-8dc0-1fde4c81a3d9" name="Changes" comment="FINAL CODE" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -187,7 +185,7 @@
       <workItem from="1710704063507" duration="8487000" />
       <workItem from="1710783728021" duration="14973000" />
       <workItem from="1710851225051" duration="11108000" />
-      <workItem from="1710873169025" duration="3346000" />
+      <workItem from="1710873169025" duration="3650000" />
     </task>
     <task id="LOCAL-00001" summary="Main py changed to amazd">
       <option name="closed" value="true" />
@@ -349,7 +347,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710876855045</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="FINAL CODE">
+      <option name="closed" value="true" />
+      <created>1710877278842</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1710877278842</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

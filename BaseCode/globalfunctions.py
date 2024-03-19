@@ -61,7 +61,7 @@ def load_graphics(filepath: str):
 def import_graphics_dict(sprite_name: str, animation_dict: dict, filepath: str):
     """
     Description:
-        Imports all the pygame images from load_graphics and places them into a dictionary
+        Imports all the pygame images from load_graphics and places them into a dictionary.
 
     Parameters:
         sprite_name (str): The name of the sprite, for which images are being loaded
