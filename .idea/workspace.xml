@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="887a5ba4-2fb2-473d-8dc0-1fde4c81a3d9" name="Changes" comment="FINAL CODE" />
+    <list default="true" id="887a5ba4-2fb2-473d-8dc0-1fde4c81a3d9" name="Changes" comment="FINAL CODE">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BaseCode/amazd-game-3-levels.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BaseCode/maze.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/maze.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -185,7 +189,7 @@
       <workItem from="1710704063507" duration="8487000" />
       <workItem from="1710783728021" duration="14973000" />
       <workItem from="1710851225051" duration="11108000" />
-      <workItem from="1710873169025" duration="3650000" />
+      <workItem from="1710873169025" duration="6191000" />
     </task>
     <task id="LOCAL-00001" summary="Main py changed to amazd">
       <option name="closed" value="true" />
@@ -355,7 +359,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710877278842</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="FINAL CODE">
+      <option name="closed" value="true" />
+      <created>1710877318723</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1710877318723</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -400,6 +412,6 @@
     <SUITE FILE_PATH="coverage/amazd_py$hash_table__1_.coverage" NAME="hash table (1) Coverage Results" MODIFIED="1710186056849" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="M:/School/YEAR 13/comp sci/dales" />
     <SUITE FILE_PATH="coverage/amazd_the_final$mazelevel.coverage" NAME="mazelevel Coverage Results" MODIFIED="1708371275790" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Base Code" />
     <SUITE FILE_PATH="coverage/amazd_the_final$amazd.coverage" NAME="amazd Coverage Results" MODIFIED="1709762814042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Base Code" />
-    <SUITE FILE_PATH="coverage/amazd_py$amazd__1_.coverage" NAME="amazd (1) Coverage Results" MODIFIED="1710876989501" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BaseCode" />
+    <SUITE FILE_PATH="coverage/amazd_py$amazd__1_.coverage" NAME="amazd (1) Coverage Results" MODIFIED="1710884670939" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BaseCode" />
   </component>
 </project>

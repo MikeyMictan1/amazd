@@ -7,14 +7,14 @@ class DepthFirstMaze:
         Class that creates the recursive depth-first maze.
 
     Attributes:
-        df_maze (list):
-        __maze_width (int):
-        __maze_height (int):
+        df_maze (list): List of the depth-first created maze
+        __maze_width (int): width of the maze to be generated
+        __maze_height (int): height of the maze to be generated
 
-        visited_cells_stack (list):
-        placed_portal (bool):
-        maze_lst (list):
-        __row_num (int):
+        visited_cells_stack (list): Stack of visited cells during recursion
+        placed_portal (bool): Flag that checks if an exit portal has been placed
+        maze_lst (list): List of the final generated maze
+        __row_num (int): The first row number of the generated maze
     """
     def __init__(self, maze_width: int, maze_height: int):
         """
