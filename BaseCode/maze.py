@@ -46,7 +46,7 @@ class DepthFirstMaze:
         """
         Description:
             used in depth first maze generation, finds all neighbour cells of the current cell, and returns neighbour
-            cells if then haven't been visited.
+            cells if they haven't been visited.
 
         Parameters:
             direction (tuple): The direction that the neighbour cell is, relative to the current cell.

@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="887a5ba4-2fb2-473d-8dc0-1fde4c81a3d9" name="Changes" comment="FINAL CODE">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BaseCode/amazd-game-3-levels.exe" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/BaseCode/maze.py" beforeDir="false" afterPath="$PROJECT_DIR$/BaseCode/maze.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -189,7 +188,8 @@
       <workItem from="1710704063507" duration="8487000" />
       <workItem from="1710783728021" duration="14973000" />
       <workItem from="1710851225051" duration="11108000" />
-      <workItem from="1710873169025" duration="6191000" />
+      <workItem from="1710873169025" duration="9589000" />
+      <workItem from="1710927505032" duration="5213000" />
     </task>
     <task id="LOCAL-00001" summary="Main py changed to amazd">
       <option name="closed" value="true" />
@@ -367,7 +367,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710877318723</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="FINAL CODE">
+      <option name="closed" value="true" />
+      <created>1710887419585</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1710887419585</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
